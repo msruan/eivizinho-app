@@ -1,4 +1,4 @@
-import 'package:eiviznho/app/text.styles.dart';
+import 'package:eiviznho/app/styles/text.styles.dart';
 import 'package:flutter/material.dart';
 
 AppBar screenHeader({required String title}) {

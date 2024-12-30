@@ -3,14 +3,14 @@ import 'package:eiviznho/app/alerts/alert.model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AlertsListContainer extends StatefulWidget {
-  const AlertsListContainer({super.key});
+class AlertsListWidget extends StatefulWidget {
+  const AlertsListWidget({super.key});
 
   @override
-  State<AlertsListContainer> createState() => _AlertsListContainerState();
+  State<AlertsListWidget> createState() => _AlertsListWidgetState();
 }
 
-class _AlertsListContainerState extends State<AlertsListContainer> {
+class _AlertsListWidgetState extends State<AlertsListWidget> {
   late Future<List<Alert>> futureAlerts;
 
   @override
@@ -80,7 +80,6 @@ class AlertItem extends StatelessWidget {
           ),
           const SizedBox(width: 10),
           Expanded(child: Text(alert.description)),
-        
           Column(
             children: [
               Text(formattedDate),

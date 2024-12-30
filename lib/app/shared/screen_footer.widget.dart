@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 
 BottomNavigationBar screenFooter = BottomNavigationBar(
-  backgroundColor: Colors.pink,
+  backgroundColor: Colors.blueGrey,
+  type: BottomNavigationBarType.shifting,
   items: const [
     BottomNavigationBarItem(
       icon: Icon(
-        Icons.home,
+        Icons.forum_rounded,
+      ),
+      label: "Notifications",
+    ),
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.warning_rounded,
       ),
       label: "Home",
     ),
     BottomNavigationBarItem(
       icon: Icon(
-        Icons.add_ic_call_outlined,
+        Icons.list_rounded,
       ),
-      label: "Call",
+      label: "Alertas",
     ),
   ],
 );
