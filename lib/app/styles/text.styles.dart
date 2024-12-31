@@ -1,8 +1,35 @@
+import 'package:eiviznho/app/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-TextStyle H1 = TextStyle(fontWeight: FontWeight.bold, fontSize: 26, height: 32);
-TextStyle H2 = TextStyle(fontWeight: FontWeight.bold, fontSize: 22, height: 28);
-TextStyle H3 = TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 24);
-TextStyle H4 = TextStyle(fontWeight: FontWeight.bold, fontSize: 19, height: 24);
-TextStyle H5 = TextStyle(fontWeight: FontWeight.bold, fontSize: 18, height: 24);
-TextStyle H6 = TextStyle(fontWeight: FontWeight.bold, fontSize: 16, height: 24);
+class AppTextStyles {
+  static TextStyle get titleLarge => GoogleFonts.inter(
+        fontSize: 28,
+        fontWeight: FontWeight.bold,
+        color: AppColors.textPrimary,
+      );
+
+  static TextStyle get titleMedium => GoogleFonts.inter(
+        fontSize: 24,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      );
+
+  static TextStyle get titleSmall => GoogleFonts.inter(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        color: AppColors.textPrimary,
+      );
+
+  static TextStyle get bodyMedium => GoogleFonts.inter(
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+        color: AppColors.textPrimary,
+      );
+
+  static TextStyle get bodySmall => GoogleFonts.inter(
+        fontSize: 14,
+        fontWeight: FontWeight.normal,
+        color: AppColors.textSecondary,
+      );
+}

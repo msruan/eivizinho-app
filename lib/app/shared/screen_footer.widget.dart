@@ -8,7 +8,7 @@ BottomNavigationBar screenFooter = BottomNavigationBar(
       icon: Icon(
         Icons.forum_rounded,
       ),
-      label: "Notifications",
+      label: "Notificações",
     ),
     BottomNavigationBarItem(
       icon: Icon(

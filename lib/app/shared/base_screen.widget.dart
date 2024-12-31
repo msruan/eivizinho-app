@@ -1,5 +1,5 @@
-import 'package:eiviznho/app/shared/screen_header.widget.dart';
 import 'package:eiviznho/app/shared/screen_footer.widget.dart';
+import 'package:eiviznho/app/shared/screen_header.widget.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {
@@ -11,8 +11,8 @@ class BaseScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          height: 500,
-          width: 1000,
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
           child: content,
         ),
       ),

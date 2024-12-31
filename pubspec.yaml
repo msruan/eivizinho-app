@@ -9,13 +9,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  get_it: ^8.0.3
+  google_fonts: ^6.2.1
   http: ^1.2.2
+  intl: ^0.20.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^5.0.0
-  intl: ^0.18.0
 
 flutter:
   uses-material-design: true
