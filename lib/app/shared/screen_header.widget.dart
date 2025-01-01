@@ -1,5 +1,5 @@
-import 'package:eiviznho/app/styles/colors.dart';
-import 'package:eiviznho/app/styles/text.styles.dart';
+import 'package:eiviznho/app/ui/styles/colors.dart';
+import 'package:eiviznho/app/ui/styles/text.styles.dart';
 import 'package:flutter/material.dart';
 
 AppBar screenHeader({required String title}) {

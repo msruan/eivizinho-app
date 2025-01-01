@@ -1,6 +1,7 @@
-import 'package:eiviznho/app/styles/text.styles.dart';
-import 'package:eiviznho/app/ui/pages/AlertList/alert_list_injection.dart';
-import 'package:eiviznho/app/ui/pages/AlertList/alert_list_page.dart';
+import 'package:eiviznho/app/ui/styles/text.styles.dart';
+import 'package:eiviznho/app/ui/screens/AlertList/alert_list_injection.dart';
+import 'package:eiviznho/app/ui/screens/AlertList/alert_list_screen.dart';
+import 'package:eiviznho/app/routing/router.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,8 +14,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: "Meili",
+      routerConfig: router,
       theme: ThemeData(
         primaryColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -25,7 +27,6 @@ class MainApp extends StatelessWidget {
           titleMedium: AppTextStyles.titleMedium,
         ),
       ),
-      home: const AlertListPage(),
     );
   }
 }

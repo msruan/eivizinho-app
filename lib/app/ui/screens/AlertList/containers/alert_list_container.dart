@@ -1,7 +1,7 @@
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/domain/usecases/get_alerts_usecases.dart';
-import 'package:eiviznho/app/ui/pages/AlertList/alert_list_injection.dart';
-import 'package:eiviznho/app/ui/pages/AlertList/interfaces/alert_list_interface.dart';
+import 'package:eiviznho/app/ui/screens/AlertList/alert_list_injection.dart';
+import 'package:eiviznho/app/ui/screens/AlertList/interfaces/alert_list_interface.dart';
 import 'package:flutter/material.dart';
 
 class AlertListContainer extends StatefulWidget {

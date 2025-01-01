@@ -1,8 +1,8 @@
-import 'package:eiviznho/app/styles/colors.dart';
+import 'package:eiviznho/app/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppTextStyles {
+abstract final class AppTextStyles {
   static TextStyle get titleLarge => GoogleFonts.inter(
         fontSize: 28,
         fontWeight: FontWeight.bold,

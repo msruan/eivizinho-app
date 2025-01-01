@@ -1,5 +1,5 @@
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
-import 'package:eiviznho/app/styles/colors.dart';
+import 'package:eiviznho/app/ui/styles/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
