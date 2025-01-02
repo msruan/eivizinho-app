@@ -1,5 +1,5 @@
-import 'package:eiviznho/app/shared/screen_footer.widget.dart';
-import 'package:eiviznho/app/shared/screen_header.widget.dart';
+import 'package:eiviznho/app/ui/shared/screen_footer.widget.dart';
+import 'package:eiviznho/app/ui/shared/screen_header.widget.dart';
 import 'package:flutter/material.dart';
 
 class BaseScreen extends StatelessWidget {

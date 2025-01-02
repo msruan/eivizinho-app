@@ -1,6 +1,6 @@
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
-import 'package:eiviznho/app/shared/base_screen.widget.dart';
-import 'package:eiviznho/app/ui/screens/AlertList/components/alert_item.dart';
+import 'package:eiviznho/app/ui/shared/base_screen.widget.dart';
+import 'package:eiviznho/app/ui/alert_list/components/alert_item.dart';
 import 'package:flutter/material.dart';
 
 class AlertListInterface extends StatelessWidget {

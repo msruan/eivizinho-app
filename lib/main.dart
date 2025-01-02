@@ -1,6 +1,6 @@
 import 'package:eiviznho/app/ui/styles/text.styles.dart';
-import 'package:eiviznho/app/ui/screens/AlertList/alert_list_injection.dart';
-import 'package:eiviznho/app/ui/screens/AlertList/alert_list_screen.dart';
+import 'package:eiviznho/app/ui/alert_list/alert_list_injection.dart';
+import 'package:eiviznho/app/ui/alert_list/alert_list_screen.dart';
 import 'package:eiviznho/app/routing/router.dart';
 import 'package:flutter/material.dart';
 
