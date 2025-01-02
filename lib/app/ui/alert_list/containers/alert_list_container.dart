@@ -28,31 +28,33 @@ class _AlertListContainerState extends State<AlertListContainer> {
   }
 
   Future<void> _fetchAlerts() async {
-    var alertsState = June.getState(() => AlertsState());
+    AlertsState alertsState = June.getState(() => AlertsState());
 
     try {
       alertsState
         ..isLoading = true
-        ..setState(); 
+        ..setState();
 
       final result = await _alertRepository.getAllAlerts();
 
       alertsState
         ..alerts = result
-        ..isLoading = false
-        ..setState(); 
+        ..setState();
     } catch (e) {
       alertsState
         ..alerts = []
+        ..setState();
+    } finally {
+      alertsState
         ..isLoading = false
-        ..setState(); 
+        ..setState();
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return JuneBuilder(
-      () => AlertsState(), 
+      () => AlertsState(),
       builder: (AlertsState state) {
         return AlertListInterface(
           isLoading: state.isLoading,
