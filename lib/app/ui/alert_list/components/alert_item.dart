@@ -1,5 +1,5 @@
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
-import 'package:eiviznho/app/ui/styles/colors.dart';
+import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -20,7 +20,7 @@ class AlertItem extends StatelessWidget {
     final date = DateFormat('dd/MM/yyyy').format(alert.dtHr);
     final time = DateFormat('HH:mm').format(alert.dtHr);
 
-    final icon = alertIcons[alert.type] ?? Icons.warning_rounded;
+    final icon = alertIcons[alert.category] ?? Icons.warning_rounded;
 
     return Container(
       margin: const EdgeInsets.all(3.0),
@@ -33,7 +33,7 @@ class AlertItem extends StatelessWidget {
               children: [
                 Icon(icon, color: AppColors.textPrimary, size: 24),
                 Text(
-                  alert.type,
+                  alert.category,
                   style: Theme.of(context)
                       .textTheme
                       .bodySmall

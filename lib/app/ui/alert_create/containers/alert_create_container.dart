@@ -1,14 +1,14 @@
 // ignore_for_file: avoid_print
-import 'package:eiviznho/app/data/repositories/alert_type/alert_type_repository.dart';
-import 'package:eiviznho/app/domain/entities/alert_type_entity.dart';
-import 'package:eiviznho/app/ui/alert_create/alert_create_injection.dart';
+import 'package:eiviznho/app/config/dependencies.dart';
+import 'package:eiviznho/app/data/repositories/alert_category/alert_category_repository.dart';
+import 'package:eiviznho/app/domain/entities/alert_category_entity.dart';
 import 'package:eiviznho/app/ui/alert_create/interfaces/alert_create_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:june/june.dart';
 
 class DropdownState extends JuneState {
-  AlertType? selectedValue;
-  List<AlertType> types = [];
+  AlertCategory? selectedValue;
+  List<AlertCategory> types = [];
 }
 
 class FormInfoState extends JuneState {
@@ -23,12 +23,12 @@ class AlertCreateContainer extends StatefulWidget {
 }
 
 class _AlertCreateContainerState extends State<AlertCreateContainer> {
-  late AlertTypeRepository _alertTypeRepository;
+  late AlertCategoryRepository _alertTypeRepository;
 
   @override
   void initState() {
     super.initState();
-    _alertTypeRepository = alertTypeInject.get<AlertTypeRepository>();
+    _alertTypeRepository = injector.get<AlertCategoryRepository>();
     _fetchAlertTypes();
   }
 

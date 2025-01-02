@@ -13,7 +13,7 @@ class AlertRepositoryImpl implements AlertRepository {
 
       final List<AlertEntity> alerts =
           body.map((alert) => AlertEntity.fromJson(alert)).toList();
-      print('OBA LA VEM ELA');
+      print('fetch: getAllAlerts 200 OK');
       return alerts;
     }
 
@@ -23,7 +23,7 @@ class AlertRepositoryImpl implements AlertRepository {
   @override
   Future<AlertEntity> createAlert() async {
     return AlertEntity(
-      type: "Furto",
+      category: "Furto",
       description: "Crime ocorreu por volta das 15hrs",
       id: '17',
       dtHr: DateTime.now(),

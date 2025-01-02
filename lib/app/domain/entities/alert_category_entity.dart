@@ -1,13 +1,13 @@
-class AlertType {
+class AlertCategory {
   final String id;
   final String name;
 
-  AlertType({
+  AlertCategory({
     required this.id,
     required this.name,
   });
 
-  AlertType.fromJson(Map<String, dynamic> json)
+  AlertCategory.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String,
         name = json['name'] as String;
 

@@ -1,6 +1,6 @@
 name: eiviznho
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -14,8 +14,9 @@ dependencies:
   google_fonts: ^6.2.1
   http: ^1.2.2
   intl: ^0.20.1
-  provider: ^6.1.2
   june: ^1.0.0+1
+  introduction_screen: ^3.1.14
+  flutter_native_splash: ^2.4.4
 
 dev_dependencies:
   flutter_test:

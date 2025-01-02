@@ -1,6 +1,6 @@
+import 'package:eiviznho/app/config/dependencies.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
-import 'package:eiviznho/app/ui/alert_list/alert_list_injection.dart';
 import 'package:eiviznho/app/ui/alert_list/interfaces/alert_list_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:june/june.dart';
@@ -23,7 +23,7 @@ class _AlertListContainerState extends State<AlertListContainer> {
   @override
   void initState() {
     super.initState();
-    _alertRepository = alertListInject.get<AlertRepository>();
+    _alertRepository = injector.get<AlertRepository>();
     _fetchAlerts();
   }
 
@@ -59,6 +59,7 @@ class _AlertListContainerState extends State<AlertListContainer> {
         return AlertListInterface(
           isLoading: state.isLoading,
           alerts: state.alerts,
+          handleRefresh: _fetchAlerts,
         );
       },
     );

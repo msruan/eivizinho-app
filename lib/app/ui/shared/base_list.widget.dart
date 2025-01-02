@@ -1,4 +1,4 @@
-import 'package:eiviznho/app/ui/styles/colors.dart';
+import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class BaseList<T extends Object> extends StatelessWidget {

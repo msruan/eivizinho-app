@@ -1,6 +1,6 @@
 class AlertEntity {
   final String id;
-  final String type;
+  final String category;
   final String description;
   final DateTime dtHr;
   final String local;
@@ -8,7 +8,7 @@ class AlertEntity {
 
   AlertEntity({
     required this.id,
-    required this.type,
+    required this.category,
     required this.description,
     required this.dtHr,
     required this.local,
@@ -17,7 +17,7 @@ class AlertEntity {
 
   AlertEntity.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String,
-        type = json['type'] as String,
+        category = json['category'] as String,
         description = json['description'] as String,
         dtHr = DateTime.parse(json['dtHr'] as String),
         local = json['local'] as String;
@@ -26,7 +26,7 @@ class AlertEntity {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'type': type,
+      'category': category,
       'description': description,
       'dtHr': dtHr.toIso8601String(),
       'local': local,

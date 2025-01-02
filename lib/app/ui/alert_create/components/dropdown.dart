@@ -1,4 +1,4 @@
-import 'package:eiviznho/app/domain/entities/alert_type_entity.dart';
+import 'package:eiviznho/app/domain/entities/alert_category_entity.dart';
 import 'package:eiviznho/app/ui/alert_create/containers/alert_create_container.dart';
 import 'package:flutter/material.dart';
 import 'package:june/state_manager/state_manager.dart';
@@ -16,7 +16,7 @@ class Dropdown extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                DropdownButtonFormField<AlertType>(
+                DropdownButtonFormField<AlertCategory>(
                   value: state.selectedValue,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
@@ -27,14 +27,14 @@ class Dropdown extends StatelessWidget {
                     'Selecione um incidente',
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
-                  onChanged: (AlertType? newValue) {
+                  onChanged: (AlertCategory? newValue) {
                     if (newValue != null) {
                       state.selectedValue = newValue;
                     }
                   },
-                  items: state.types
-                      .map<DropdownMenuItem<AlertType>>((AlertType value) {
-                    return DropdownMenuItem<AlertType>(
+                  items: state.types.map<DropdownMenuItem<AlertCategory>>(
+                      (AlertCategory value) {
+                    return DropdownMenuItem<AlertCategory>(
                       value: value,
                       child: Text(
                         value.name,
