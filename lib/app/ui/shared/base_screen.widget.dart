@@ -17,7 +17,32 @@ class BaseScreen extends StatelessWidget {
         ),
       ),
       appBar: screenHeader(title: title),
-      bottomNavigationBar: screenFooter,
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blueGrey,
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.grey,
+        type: BottomNavigationBarType.shifting,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.forum_rounded,
+            ),
+            label: "Notificações",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.warning_rounded,
+            ),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.list_rounded,
+            ),
+            label: "Alertas",
+          ),
+        ],
+      ),
     );
   }
 }

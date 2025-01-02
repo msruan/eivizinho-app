@@ -14,7 +14,7 @@ class AlertRepositoryImp implements AlertRepository {
 
       final List<AlertEntity> alerts =
           body.map((alert) => AlertEntity.fromJson(alert)).toList();
-
+      print('OBA LA VEM ELA');
       return alerts;
     }
 
