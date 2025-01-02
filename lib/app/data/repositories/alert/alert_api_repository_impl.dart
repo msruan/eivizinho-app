@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:http/http.dart' as http;
 
-class AlertRepositoryImp implements AlertRepository {
+class AlertRepositoryImpl implements AlertRepository {
   @override
   Future<List<AlertEntity>> getAllAlerts() async {
     final response = await http.get(Uri.parse('http://localhost:3000/alert'));

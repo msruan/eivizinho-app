@@ -1,21 +1,14 @@
-import 'package:eiviznho/app/ui/styles/text.styles.dart';
-import 'package:eiviznho/app/ui/alert_list/alert_list_injection.dart';
-import 'package:eiviznho/app/ui/alert_list/alert_list_screen.dart';
 import 'package:eiviznho/app/routing/router.dart';
-import 'package:eiviznho/app/ui/test_alert_list/view_models/alert_viewmodel.dart';
+import 'package:eiviznho/app/ui/alert_create/alert_create_injection.dart';
+import 'package:eiviznho/app/ui/alert_list/alert_list_injection.dart';
+import 'package:eiviznho/app/ui/styles/text.styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
   setupAlertListInject();
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => AlertViewModel()),
-      ],
-      child: MainApp(),
-    ),
-  );
+  setupAlertTypeInject();
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
@@ -24,7 +17,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: "Meili",
+      title: "Ei Vizinho!",
       routerConfig: router,
       theme: ThemeData(
         primaryColor: Colors.blue,

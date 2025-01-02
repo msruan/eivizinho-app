@@ -3,6 +3,12 @@ import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/ui/alert_list/alert_list_injection.dart';
 import 'package:eiviznho/app/ui/alert_list/interfaces/alert_list_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:june/june.dart';
+
+class AlertsState extends JuneState {
+  List<AlertEntity> alerts = [];
+  bool isLoading = false;
+}
 
 class AlertListContainer extends StatefulWidget {
   const AlertListContainer({super.key});
@@ -14,50 +20,47 @@ class AlertListContainer extends StatefulWidget {
 class _AlertListContainerState extends State<AlertListContainer> {
   late AlertRepository _alertRepository;
 
-  List<AlertEntity> alerts = [];
-  List<AlertEntity> fetchedAlerts = [];
-  bool isLoading = false;
-
   @override
   void initState() {
     super.initState();
     _alertRepository = alertListInject.get<AlertRepository>();
-
     _fetchAlerts();
   }
 
   Future<void> _fetchAlerts() async {
-    setState(() {
-      isLoading = true;
-    });
+    AlertsState alertsState = June.getState(() => AlertsState());
 
     try {
+      alertsState
+        ..isLoading = true
+        ..setState();
+
       final result = await _alertRepository.getAllAlerts();
-      setState(() {
-        alerts = result;
-        fetchedAlerts = result;
-      });
+
+      alertsState
+        ..alerts = result
+        ..setState();
     } catch (e) {
-      setState(() {
-        alerts = [];
-      });
+      alertsState
+        ..alerts = []
+        ..setState();
     } finally {
-      setState(() {
-        isLoading = false;
-      });
+      alertsState
+        ..isLoading = false
+        ..setState();
     }
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return AlertListInterface(
-      alerts: alerts,
-      isLoading: isLoading,
+    return JuneBuilder(
+      () => AlertsState(),
+      builder: (AlertsState state) {
+        return AlertListInterface(
+          isLoading: state.isLoading,
+          alerts: state.alerts,
+        );
+      },
     );
   }
 }

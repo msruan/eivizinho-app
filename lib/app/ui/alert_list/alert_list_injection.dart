@@ -6,5 +6,5 @@ GetIt alertListInject = GetIt.instance;
 
 void setupAlertListInject() {
   alertListInject
-      .registerLazySingleton<AlertRepository>(() => AlertRepositoryImp());
+      .registerLazySingleton<AlertRepository>(() => AlertRepositoryImpl());
 }

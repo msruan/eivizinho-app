@@ -8,7 +8,7 @@ class AlertViewModel extends ChangeNotifier {
   List<AlertEntity>? get alerts => _alerts;
 
   Future<void> fetchAlerts() async {
-    final alerts = await AlertRepositoryImp().getAllAlerts();
+    final alerts = await AlertRepositoryImpl().getAllAlerts();
     _alerts = alerts;
 
     notifyListeners();

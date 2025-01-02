@@ -52,6 +52,7 @@ class AlertItem extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(width: 10),
           Column(
             children: [
               Text(
