@@ -1,5 +1,5 @@
 # Custom
-localserver/
+/localserver/node_modules/
 
 # Miscellaneous
 *.class

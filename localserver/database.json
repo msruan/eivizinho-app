@@ -1,0 +1,76 @@
+{
+  "alert": [
+    {
+      "id": "1",
+      "type": "Assalto",
+      "description": "Dois suspeitos armados roubaram um motociclista próximo ao bairro Morada Nova.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Morada Nova"
+    },
+    {
+      "id": "2",
+      "type": "Arrombamento",
+      "description": "Ladrões arrombaram a porta de um mercado e levaram diversos produtos.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Irmã Dulce"
+    },
+
+    {
+      "id": "3",
+      "type": "Incêndio",
+      "description": "Fogo em uma residência atingiu uma área residencial.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Ininga"
+    },
+    {
+      "id": "4",
+      "type": "Acidente",
+      "description": "Carro capotou após colidir com um muro no centro da cidade.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Piçarreira"
+    },
+    {
+      "id": "5",
+      "type": "Furto",
+      "description": "Moto furtada de garagem durante a madrugada.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Centro"
+    },
+    {
+      "id": "6",
+      "type": "Acidente",
+      "description": "Um ciclista foi atropelado na faixa de pedestres.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Bairro dos Ipês"
+    },
+    {
+      "id": "7",
+      "type": "Assalto",
+      "description": "Roubo à mão armada em uma loja de conveniência no centro.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Centro"
+    },
+    {
+      "id": "8",
+      "type": "Incêndio",
+      "description": "Fogo de grandes proporções em um posto de gasolina na periferia.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Jardim Primavera"
+    },
+
+    {
+      "id": "9",
+      "type": "Acidente",
+      "description": "Carro colidiu com uma árvore na estrada de acesso à cidade.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Avenida Brasil"
+    },
+    {
+      "id": "10",
+      "type": "Assalto",
+      "description": "Criminosos em uma moto roubaram a carteira de uma pedestre.",
+      "dtHr": "2025-01-02T10:24:32.396",
+      "local": "Vila Nova"
+    }
+  ]
+}

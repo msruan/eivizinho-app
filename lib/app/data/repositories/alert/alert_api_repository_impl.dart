@@ -10,8 +10,11 @@ class AlertRepositoryImp implements AlertRepository {
     final response = await http.get(Uri.parse('http://localhost:3000/alert'));
 
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body) as List<Map<String, dynamic>>;
-      final alerts = body.map(AlertEntity.fromJson).toList();
+      final body = jsonDecode(response.body) as List<dynamic>;
+
+      final List<AlertEntity> alerts =
+          body.map((alert) => AlertEntity.fromJson(alert)).toList();
+
       return alerts;
     }
 
