@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 class AlertItem extends StatelessWidget {
   final AlertEntity alert;
+  final Widget alertDialog;
 
   final Map<String, IconData> alertIcons = {
     'Arrombamento': Icons.lock,
@@ -13,7 +14,7 @@ class AlertItem extends StatelessWidget {
     'Assalto': Icons.warning_rounded,
   };
 
-  AlertItem({required this.alert, super.key});
+  AlertItem({required this.alert, required this.alertDialog, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,29 +24,8 @@ class AlertItem extends StatelessWidget {
     final icon = alertIcons[alert.category] ?? Icons.warning_rounded;
 
     return InkWell(
-      onTap: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => Dialog(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text('This is a typical dialog.'),
-                const SizedBox(height: 15),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Close'),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-      
+      onTap: () => showDialog(
+          context: context, builder: (BuildContext context) => alertDialog),
       child: Container(
         margin: const EdgeInsets.all(3.0),
         padding: const EdgeInsets.all(3.0),

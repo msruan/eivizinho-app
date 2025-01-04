@@ -21,6 +21,12 @@ abstract final class AppTextStyles {
         color: AppColors.textPrimary,
       );
 
+  static TextStyle get titleExtraSmall => GoogleFonts.inter(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+      );
+
   static TextStyle get bodyMedium => GoogleFonts.inter(
         fontSize: 16,
         fontWeight: FontWeight.normal,
