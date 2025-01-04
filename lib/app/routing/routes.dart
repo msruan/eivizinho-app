@@ -1,4 +1,5 @@
 abstract final class Routes {
+  static const welcome = '/welcome';
   static const main = '/main';
   static const home = '/';
   static const login = '/login';

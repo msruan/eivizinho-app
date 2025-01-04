@@ -4,6 +4,7 @@ import 'package:eiviznho/app/ui/alert_list/alert_list_screen.dart';
 import 'package:eiviznho/app/ui/home/home_screen.dart';
 import 'package:eiviznho/app/ui/layouts/main_layout.dart';
 import 'package:eiviznho/app/ui/notifications/notifications_screen.dart';
+import 'package:eiviznho/app/ui/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,8 +18,10 @@ final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
 
 final router = GoRouter(
+  initialLocation: Routes.welcome,
   navigatorKey: _rootNavigatorKey,
   routes: [
+    GoRoute(path: Routes.welcome, builder: (context, state) => WelcomeScreen()),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) {

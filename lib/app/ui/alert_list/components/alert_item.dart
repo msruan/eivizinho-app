@@ -22,50 +22,75 @@ class AlertItem extends StatelessWidget {
 
     final icon = alertIcons[alert.category] ?? Icons.warning_rounded;
 
-    return Container(
-      margin: const EdgeInsets.all(3.0),
-      padding: const EdgeInsets.all(3.0),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 80,
+    return InkWell(
+      onTap: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
-              children: [
-                Icon(icon, color: AppColors.textPrimary, size: 24),
-                Text(
-                  alert.category,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodySmall
-                      ?.copyWith(fontWeight: FontWeight.w600),
-                )
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                const Text('This is a typical dialog.'),
+                const SizedBox(height: 15),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Close'),
+                ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                alert.description,
-                style: Theme.of(context).textTheme.bodyMedium,
+        ),
+      ),
+      
+      child: Container(
+        margin: const EdgeInsets.all(3.0),
+        padding: const EdgeInsets.all(3.0),
+        child: Row(
+          children: [
+            SizedBox(
+              width: 80,
+              child: Column(
+                children: [
+                  Icon(icon, color: AppColors.textPrimary, size: 24),
+                  Text(
+                    alert.category,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall
+                        ?.copyWith(fontWeight: FontWeight.w600),
+                  )
+                ],
               ),
             ),
-          ),
-          const SizedBox(width: 10),
-          Column(
-            children: [
-              Text(
-                date,
-                style: Theme.of(context).textTheme.bodySmall,
+            const SizedBox(width: 10),
+            Expanded(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  alert.description,
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
               ),
-              Text(
-                time,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ],
-          )
-        ],
+            ),
+            const SizedBox(width: 10),
+            Column(
+              children: [
+                Text(
+                  date,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+                Text(
+                  time,
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

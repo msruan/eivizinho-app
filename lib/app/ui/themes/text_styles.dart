@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 abstract final class AppTextStyles {
   static TextStyle get titleLarge => GoogleFonts.inter(
-        fontSize: 28,
+        fontSize: 26,
         fontWeight: FontWeight.bold,
         color: AppColors.textPrimary,
       );
