@@ -5,11 +5,14 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: const Placeholder(
+    return Scaffold(
+      // appBar: baseAppBar(title: 'Notificações'),
+      body: SafeArea(
+          child: const Placeholder(
         fallbackHeight: 120,
         fallbackWidth: 120,
-      ),
+      )),
+      // bottomNavigationBar: AppBaseScreen.bottomNavigationBar,
     );
   }
 }

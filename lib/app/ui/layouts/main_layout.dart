@@ -22,11 +22,24 @@ class _MainLayoutState extends State<MainLayout> {
   @override
   Widget build(BuildContext context) {
     final hasAppBar = widget.title != '';
-    return Scaffold(
-      appBar: hasAppBar ? baseAppBar(title: widget.title) : null,
-      body: SafeArea(child: widget.content),
-      bottomNavigationBar: _MainLayoutBottomBar(),
+    final List<Widget> appBar = [];
+    if (hasAppBar) {
+      appBar.add(baseAppBar(title: widget.title));
+    }
+    return SafeArea(
+      child: Column(
+        children: [
+          ...appBar,
+          Expanded(child: widget.content),
+          _MainLayoutBottomBar()
+        ],
+      ),
     );
+    // return Scaffold(
+    //   appBar: hasAppBar ? baseAppBar(title: widget.title) : null,
+    //   body: SafeArea(child: widget.content),
+    //   bottomNavigationBar: _MainLayoutBottomBar(),
+    // );
   }
 }
 
