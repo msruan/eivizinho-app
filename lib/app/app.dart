@@ -15,6 +15,7 @@ class App extends StatelessWidget {
         primaryColor: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textTheme: TextTheme(
+          bodyLarge: AppTextStyles.bodyLarge,
           bodyMedium: AppTextStyles.bodyMedium,
           bodySmall: AppTextStyles.bodySmall,
           titleLarge: AppTextStyles.titleLarge,

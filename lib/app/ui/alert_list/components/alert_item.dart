@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class AlertItem extends StatelessWidget {
-  final AlertEntity alert;
+  final Alert alert;
 
   final Map<String, IconData> alertIcons = {
     'Arrombamento': Icons.lock,
@@ -42,7 +42,6 @@ class AlertItem extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 10),
           Expanded(
             child: Align(
               alignment: Alignment.centerLeft,

@@ -1,36 +1,36 @@
-class AlertEntity {
-  final String id;
+import 'package:image_picker/image_picker.dart';
+
+class Alert {
   final String category;
   final String description;
   final DateTime dtHr;
   final String local;
-  // final User user;
+  final List<XFile>? media;
 
-  AlertEntity({
-    required this.id,
-    required this.category,
-    required this.description,
-    required this.dtHr,
-    required this.local,
-    // required this.user,
-  });
+  Alert(
+      {required this.category,
+      required this.description,
+      required this.dtHr,
+      required this.local,
+      this.media});
 
-  AlertEntity.fromJson(Map<String, dynamic> json)
-      : id = json['id'] as String,
-        category = json['category'] as String,
+  Alert.fromJson(Map<String, dynamic> json)
+      : category = json['category'] as String,
         description = json['description'] as String,
         dtHr = DateTime.parse(json['dtHr'] as String),
-        local = json['local'] as String;
-  // user = User.fromJson(json['user'] as Map<String, dynamic>);
+        local = json['local'] as String,
+        media = (json['media'] as List?)
+                ?.map((e) => XFile(e.toString()))
+                .toList() ??
+            [];
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'category': category,
       'description': description,
       'dtHr': dtHr.toIso8601String(),
       'local': local,
-      // 'user': user.toJson();
+      'media': media?.map((mediaFile) => mediaFile.path).toList() ?? []
     };
   }
 }

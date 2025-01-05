@@ -5,20 +5,30 @@ import 'package:google_fonts/google_fonts.dart';
 abstract final class AppTextStyles {
   static TextStyle get titleLarge => GoogleFonts.inter(
         fontSize: 28,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w800,
         color: AppColors.textPrimary,
+        letterSpacing: -1.0,
       );
 
   static TextStyle get titleMedium => GoogleFonts.inter(
         fontSize: 24,
         fontWeight: FontWeight.w600,
         color: AppColors.textPrimary,
+        letterSpacing: -1.0,
       );
 
   static TextStyle get titleSmall => GoogleFonts.inter(
         fontSize: 20,
         fontWeight: FontWeight.w500,
         color: AppColors.textPrimary,
+        letterSpacing: -1.0,
+      );
+
+  static TextStyle get bodyLarge => GoogleFonts.inter(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
+        letterSpacing: -1.0,
       );
 
   static TextStyle get bodyMedium => GoogleFonts.inter(

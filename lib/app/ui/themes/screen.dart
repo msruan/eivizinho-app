@@ -8,17 +8,17 @@ abstract final class AppBaseScreen {
 }
 
 AppBar _baseScreenAppBar({required String title}) {
-  TextStyle textDecoration = AppTextStyles.titleSmall;
+  TextStyle textDecoration = AppTextStyles.titleMedium;
   return AppBar(
     centerTitle: true,
     title: Text(title),
     titleTextStyle: textDecoration,
-    backgroundColor: AppColors.backgroundSecondary,
+    backgroundColor: AppColors.backgroundPrimary
   );
 }
 
 class _BaseScreenBottomNavigationBarWIdget extends StatefulWidget {
-  const _BaseScreenBottomNavigationBarWIdget({super.key});
+  const _BaseScreenBottomNavigationBarWIdget();
 
   @override
   State<_BaseScreenBottomNavigationBarWIdget> createState() =>
@@ -33,7 +33,7 @@ class _BaseScreenBottomNavigationBarWIdgetState
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: _index,
-      backgroundColor: Colors.blueGrey,
+      backgroundColor: AppColors.backgroundPrimary,
       type: BottomNavigationBarType.fixed,
       selectedItemColor: Colors.lightBlueAccent,
       unselectedItemColor: Colors.grey,

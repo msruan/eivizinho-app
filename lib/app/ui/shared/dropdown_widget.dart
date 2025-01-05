@@ -1,0 +1,52 @@
+import 'package:eiviznho/app/ui/themes/colors.dart';
+import 'package:flutter/material.dart';
+
+class Dropdown<T extends Object> extends StatelessWidget {
+  final T? selectedValue;
+  final List<T> items;
+  final String hintText;
+  final ValueChanged<T?> onChanged;
+  final String Function(T) itemLabelBuilder;
+
+  const Dropdown(
+      {super.key,
+      this.selectedValue,
+      required this.items,
+      required this.hintText,
+      required this.onChanged,
+      required this.itemLabelBuilder});
+
+  @override
+  Widget build(BuildContext context) {
+    return FormField<T>(
+      initialValue: selectedValue,
+      onSaved: (value) => onChanged(value),
+      builder: (FormFieldState<T> state) {
+        return DropdownButtonFormField<T>(
+          value: state.value,
+          decoration: InputDecoration(
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(8.0)),
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8.0),
+                  borderSide: BorderSide(color: AppColors.textPrimary))),
+          hint: Text(
+            hintText,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+          onChanged: onChanged,
+          focusColor: Colors.transparent,
+          items: items.map<DropdownMenuItem<T>>((T? value) {
+            return DropdownMenuItem<T>(
+              value: value,
+              child: Text(
+                itemLabelBuilder(value!),
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
+}

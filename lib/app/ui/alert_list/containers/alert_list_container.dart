@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:june/june.dart';
 
 class AlertsState extends JuneState {
-  List<AlertEntity> alerts = [];
+  List<Alert> alerts = [];
   bool isLoading = false;
 }
 

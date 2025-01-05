@@ -1,83 +1,138 @@
-// ignore_for_file: avoid_print
 import 'package:eiviznho/app/config/dependencies.dart';
+import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/data/repositories/alert_category/alert_category_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_category_entity.dart';
+import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/ui/alert_create/interfaces/alert_create_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:june/june.dart';
 
 class DropdownState extends JuneState {
   AlertCategory? selectedValue;
   List<AlertCategory> types = [];
+
+  void updateTypes(List<AlertCategory> typesList) {
+    types = typesList;
+    setState();
+  }
+
+  void onSelectValue(AlertCategory? newValue) {
+    if (newValue != null) {
+      selectedValue = newValue;
+      setState();
+    }
+  }
 }
 
-class FormInfoState extends JuneState {
-  String? description;
+class MediaState extends JuneState {
+  List<XFile> selectedMedia = [];
+
+  Future<void> addMedia() async {
+    try {
+      final result = await ImagePicker().pickMultiImage();
+      if (result.isNotEmpty) {
+        selectedMedia = [...selectedMedia, ...result].take(5).toList();
+        setState();
+      }
+    } catch (e) {
+      print('Deu ruim quando foi pegar imagem da galeria... $e');
+    }
+  }
+
+  void removeMedia(int index) {
+    selectedMedia.removeAt(index);
+    setState();
+  }
 }
 
 class AlertCreateContainer extends StatefulWidget {
   const AlertCreateContainer({super.key});
 
   @override
-  State<AlertCreateContainer> createState() => _AlertCreateContainerState();
+  _AlertCreateContainerState createState() => _AlertCreateContainerState();
 }
 
 class _AlertCreateContainerState extends State<AlertCreateContainer> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   late AlertCategoryRepository _alertTypeRepository;
+  late AlertRepository _alertRepository;
+
+  late TextEditingController _descriptionController;
+
+  var dropdownState = June.getState(() => DropdownState());
+  var mediaState = June.getState(() => MediaState());
 
   @override
   void initState() {
     super.initState();
     _alertTypeRepository = injector.get<AlertCategoryRepository>();
+    _alertRepository = injector.get<AlertRepository>();
+    _descriptionController = TextEditingController();
+
     _fetchAlertTypes();
   }
 
-  Future<void> _fetchAlertTypes() async {
-    DropdownState dropdownState = June.getState(() => DropdownState());
+  @override
+  void dispose() {
+    _descriptionController.dispose();
+    super.dispose();
+  }
 
+  String? _validatorString(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Campo obrigatório';
+    }
+    return null;
+  }
+
+  Future<void> _fetchAlertTypes() async {
     try {
       final result = await _alertTypeRepository.getAllAlertType();
-      dropdownState
-        ..types = result
-        ..setState();
+      dropdownState.updateTypes(result);
     } catch (e) {
-      dropdownState
-        ..types = []
-        ..setState();
+      dropdownState.updateTypes([]);
     }
   }
 
-  Future<void> _submitForm(
-      FormInfoState formState, DropdownState dropdownState) async {
-    final description = formState.description;
-    final selectedAlertType = dropdownState.selectedValue;
+  Future<void> _submitForm() async {
+    if (!mounted) return;
+    FocusScope.of(context).unfocus();
 
-    if (description == null ||
-        description.isEmpty ||
-        selectedAlertType == null) {
-      print('Form com campo nulo...');
+    final description = _descriptionController.text;
+    final selectedAlertType = dropdownState.selectedValue;
+    final selectedMedia = mediaState.selectedMedia;
+
+    if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    print('Alerta criado!!');
-    print('Tipo de alerta: ${selectedAlertType.name}');
-    print('Descrição: $description');
+    final requestData = Alert(
+      category: selectedAlertType!.id,
+      description: description,
+      dtHr: DateTime.now(),
+      local: 'Morada nova',
+      media: selectedMedia,
+    );
+
+    await _alertRepository.createAlert(requestData.toJson());
+    _formKey.currentState?.reset();
   }
 
   @override
   Widget build(BuildContext context) {
-    return JuneBuilder(
-      () => FormInfoState(),
-      builder: (formState) {
-        return AlertCreateInterface(
-          formState: formState,
-          onSubmit: () {
-            final dropdownState =
-                June.getState<DropdownState>(() => DropdownState());
-            _submitForm(formState, dropdownState);
-          },
-        );
-      },
-    );
+    return JuneBuilder(() => MediaState(),
+        builder: (mediaState) => JuneBuilder(
+              () => DropdownState(),
+              builder: (dropdownState) => AlertCreateInterface(
+                textingController: _descriptionController,
+                onSubmit: _submitForm,
+                dropdownState: dropdownState,
+                mediaState: mediaState,
+                validator: _validatorString,
+                formKey: _formKey,
+              ),
+            ));
   }
 }
