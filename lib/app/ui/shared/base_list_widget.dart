@@ -1,7 +1,7 @@
 import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 
-class BaseList<T extends Object> extends StatelessWidget {
+class BaseList<T> extends StatelessWidget {
   final bool isLoading;
   final String emptyMessage;
   final List<T> data;
@@ -21,7 +21,7 @@ class BaseList<T extends Object> extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 46),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         child: Column(
           children: [
             isLoading

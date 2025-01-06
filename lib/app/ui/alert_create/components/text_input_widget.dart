@@ -8,7 +8,7 @@ InputBorder _buildInputBorder(Color color, BorderRadius borderRadius) {
   );
 }
 
-class TextInput<T extends Object> extends StatelessWidget {
+class TextInput<T> extends StatelessWidget {
   final Function(String) validator;
   final String? hintText;
   final TextEditingController controller;
@@ -29,16 +29,14 @@ class TextInput<T extends Object> extends StatelessWidget {
       maxLines: 8,
       style: Theme.of(context).textTheme.bodySmall,
       decoration: InputDecoration(
-        hintText: hintText,
-        hintStyle: Theme.of(context).textTheme.bodySmall,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 12.0, horizontal: 12.0),
-        enabledBorder:
-            _buildInputBorder(AppColors.backgroundSecondary, borderRadius),
-        focusedBorder: _buildInputBorder(AppColors.textPrimary, borderRadius),
-        errorBorder: _buildInputBorder(Colors.red, borderRadius),
-        focusedErrorBorder: _buildInputBorder(Colors.red, borderRadius),
-      ),
+          hintText: hintText,
+          hintStyle: Theme.of(context).textTheme.bodySmall,
+          enabledBorder:
+              _buildInputBorder(AppColors.backgroundSecondary, borderRadius),
+          focusedBorder: _buildInputBorder(AppColors.textPrimary, borderRadius),
+          errorBorder: _buildInputBorder(Colors.red, borderRadius),
+          focusedErrorBorder: _buildInputBorder(Colors.red, borderRadius),
+          errorStyle: TextStyle(color: Colors.red, fontSize: 12)),
     );
   }
 }

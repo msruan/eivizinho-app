@@ -25,54 +25,67 @@ class AlertCreateInterface extends StatelessWidget {
     required this.textingController,
   });
 
+  Widget _buildMainContent() {
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FieldBox(
+                title: 'Tipo de acidente',
+                inputWidget: Dropdown(
+                  selectedValue: dropdownState.selectedValue,
+                  hintText: 'Selecione o tipo de incidente',
+                  items: dropdownState.types,
+                  onChanged: (newTypeSelected) =>
+                      dropdownState.onSelectValue(newTypeSelected),
+                  itemLabelBuilder: (type) => type.name,
+                ),
+              ),
+              FieldBox(
+                title: 'Descrição',
+                inputWidget: TextInput(
+                  validator: validator,
+                  controller: textingController,
+                  hintText: 'Descreva o que aconteceu...',
+                ),
+              ),
+              FieldBox(
+                title: 'Anexos',
+                inputWidget: ImageInput(
+                  selectedMedia: mediaState.selectedMedia,
+                  onPickGalleryImage: () async {
+                    await mediaState.addMedia();
+                  },
+                  onRemoveImage: (index) => mediaState.removeMedia(index),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: baseAppBar(title: 'Criar alerta'),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
-          child: Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FieldBox(
-                  title: 'Tipo de acidente',
-                  inputWidget: Dropdown(
-                    selectedValue: dropdownState.selectedValue,
-                    hintText: 'Selecione o tipo de incidente',
-                    items: dropdownState.types,
-                    onChanged: (newTypeSelected) =>
-                        dropdownState.onSelectValue(newTypeSelected),
-                    itemLabelBuilder: (type) => type.name,
-                  ),
-                ),
-                FieldBox(
-                  title: 'Descrição',
-                  inputWidget: TextInput(
-                    validator: validator,
-                    controller: textingController,
-                    hintText: 'Descreva o que aconteceu...',
-                  ),
-                ),
-                FieldBox(
-                  title: 'Anexos',
-                  inputWidget: ImageInput(
-                    selectedMedia: mediaState.selectedMedia,
-                    onPickGalleryImage: () async {
-                      await mediaState.addMedia();
-                    },
-                    onRemoveImage: (index) => mediaState.removeMedia(index),
-                  ),
-                ),
-                Button(onPress: onSubmit, title: 'ENVIAR')
-              ],
-            ),
-          ),
-        ),
+      body: Column(
+        children: [
+          Expanded(
+              child:
+                  _buildMainContent()), 
+          Padding(
+            padding:
+                const EdgeInsets.all(20.0), 
+            child: Button(onPress: onSubmit, title: 'ENVIAR'),
+          )
+        ],
       ),
-      // bottomNavigationBar: AppBaseScreen.bottomNavigationBar,
     );
   }
 }

@@ -35,7 +35,7 @@ class MediaState extends JuneState {
         setState();
       }
     } catch (e) {
-      print('Deu ruim quando foi pegar imagem da galeria... $e');
+      print('Erro no pick da galeria... $e');
     }
   }
 
@@ -45,7 +45,7 @@ class MediaState extends JuneState {
   }
 
   void clear() {
-    selectedMedia = [];
+    selectedMedia.clear();
     setState();
   }
 }
@@ -82,6 +82,7 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
   void dispose() {
     _descriptionController.dispose();
     dropdownState.updateTypes([]);
+    mediaState.clear();
     super.dispose();
   }
 
@@ -122,10 +123,9 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     );
 
     await _alertRepository.createAlert(requestData.toJson());
-    
+
     _formKey.currentState?.reset();
     _descriptionController.clear();
-    dropdownState.onSelectValue(null);
     mediaState.clear();
   }
 
