@@ -4,7 +4,7 @@ import 'package:eiviznho/app/ui/alert_create/components/text_input_widget.dart';
 import 'package:eiviznho/app/ui/alert_create/containers/alert_create_container.dart';
 import 'package:eiviznho/app/ui/shared/button_widget.dart';
 import 'package:eiviznho/app/ui/shared/dropdown_widget.dart';
-import 'package:eiviznho/app/ui/themes/screen.dart';
+import 'package:eiviznho/app/ui/shared/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class AlertCreateInterface extends StatelessWidget {
@@ -28,7 +28,7 @@ class AlertCreateInterface extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBaseScreen.appBar(title: "Criar novo alerta"),
+      appBar: baseAppBar(title: 'Criar alerta'),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 20.0),
@@ -72,7 +72,7 @@ class AlertCreateInterface extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: AppBaseScreen.bottomNavigationBar,
+      // bottomNavigationBar: AppBaseScreen.bottomNavigationBar,
     );
   }
 }

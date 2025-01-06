@@ -1,4 +1,5 @@
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
+import 'package:eiviznho/app/ui/alert_list/components/alert_details.dart';
 import 'package:eiviznho/app/ui/alert_list/components/alert_item.dart';
 import 'package:eiviznho/app/ui/shared/base_list_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,12 @@ class AlertListInterface extends StatelessWidget {
           isLoading: isLoading,
           emptyMessage: "Nenhum alerta encontrado!",
           data: alerts,
-          itemBuilder: (alert) => AlertItem(alert: alert),
+          itemBuilder: (alert) => AlertItem(
+            alert: alert,
+            alertDialog: AlertDetails(
+              alert: alert,
+            ),
+          ),
         ),
         onRefresh: () => handleRefresh());
   }

@@ -14,14 +14,13 @@ class DropdownState extends JuneState {
 
   void updateTypes(List<AlertCategory> typesList) {
     types = typesList;
+    selectedValue = null;
     setState();
   }
 
   void onSelectValue(AlertCategory? newValue) {
-    if (newValue != null) {
-      selectedValue = newValue;
-      setState();
-    }
+    selectedValue = newValue;
+    setState();
   }
 }
 
@@ -42,6 +41,11 @@ class MediaState extends JuneState {
 
   void removeMedia(int index) {
     selectedMedia.removeAt(index);
+    setState();
+  }
+
+  void clear() {
+    selectedMedia = [];
     setState();
   }
 }
@@ -77,6 +81,7 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
   @override
   void dispose() {
     _descriptionController.dispose();
+    dropdownState.updateTypes([]);
     super.dispose();
   }
 
@@ -117,7 +122,11 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     );
 
     await _alertRepository.createAlert(requestData.toJson());
+    
     _formKey.currentState?.reset();
+    _descriptionController.clear();
+    dropdownState.onSelectValue(null);
+    mediaState.clear();
   }
 
   @override

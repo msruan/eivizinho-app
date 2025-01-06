@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 abstract final class AppTextStyles {
   static TextStyle get titleLarge => GoogleFonts.inter(
-        fontSize: 28,
-        fontWeight: FontWeight.w800,
+        fontSize: 26,
+        fontWeight: FontWeight.bold,
         color: AppColors.textPrimary,
         letterSpacing: -1.0,
       );
@@ -29,6 +29,12 @@ abstract final class AppTextStyles {
         fontWeight: FontWeight.w600,
         color: AppColors.textPrimary,
         letterSpacing: -1.0,
+      );
+
+  static TextStyle get titleExtraSmall => GoogleFonts.inter(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+        color: AppColors.textPrimary,
       );
 
   static TextStyle get bodyMedium => GoogleFonts.inter(

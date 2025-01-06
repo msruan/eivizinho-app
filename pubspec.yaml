@@ -28,5 +28,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
   assets:
+    - assets/images/welcome.png
     - .env
