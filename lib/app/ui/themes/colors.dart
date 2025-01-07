@@ -5,5 +5,7 @@ abstract final class AppColors {
   static const Color backgroundSecondary = Color.fromRGBO(158, 158, 158, 1);
   static const Color textPrimary = Color(0xFF000000);
   static const Color textSecondary = Color(0xFF616161);
-  static const Color blue = Color(0xFF083C62);
+  static const Color primaryBlue = Color(0xFF083C62);
+  static const Color secondaryBlue = Color.fromARGB(255, 14, 91, 146);
+  static const Color red = Color.fromARGB(255, 223, 39, 26);
 }

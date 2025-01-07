@@ -34,9 +34,9 @@ class TextInput<T> extends StatelessWidget {
           enabledBorder:
               _buildInputBorder(AppColors.backgroundSecondary, borderRadius),
           focusedBorder: _buildInputBorder(AppColors.textPrimary, borderRadius),
-          errorBorder: _buildInputBorder(Colors.red, borderRadius),
-          focusedErrorBorder: _buildInputBorder(Colors.red, borderRadius),
-          errorStyle: TextStyle(color: Colors.red, fontSize: 12)),
+          errorBorder: _buildInputBorder(AppColors.red, borderRadius),
+          focusedErrorBorder: _buildInputBorder(AppColors.red, borderRadius),
+          errorStyle: TextStyle(color: AppColors.red, fontSize: 12)),
     );
   }
 }

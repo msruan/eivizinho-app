@@ -71,6 +71,8 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
   DropdownState dropdownState = June.getState(() => DropdownState());
   MediaState mediaState = June.getState(() => MediaState());
 
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -109,13 +111,17 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     if (!mounted) return;
     FocusScope.of(context).unfocus();
 
-    final description = _descriptionController.text;
-    final selectedAlertType = dropdownState.selectedValue;
-    final selectedMedia = mediaState.selectedMedia;
-
     if (!_formKey.currentState!.validate()) {
       return;
     }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    final description = _descriptionController.text;
+    final selectedAlertType = dropdownState.selectedValue;
+    final selectedMedia = mediaState.selectedMedia;
 
     final Position currentPosition = await getCurrentPosition();
 
@@ -134,6 +140,10 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     _descriptionController.clear();
     dropdownState.updateTypes([]);
     mediaState.clear();
+
+    setState(() {
+      _isLoading = false;
+    });
   }
 
   @override
@@ -148,6 +158,7 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
                 mediaState: mediaState,
                 validator: _validatorString,
                 formKey: _formKey,
+                isLoading: _isLoading,
               ),
             ));
   }

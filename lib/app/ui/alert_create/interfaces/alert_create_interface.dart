@@ -14,6 +14,7 @@ class AlertCreateInterface extends StatelessWidget {
   final MediaState mediaState;
   final VoidCallback onSubmit;
   final Function(String) validator;
+  final bool isLoading;
 
   const AlertCreateInterface({
     super.key,
@@ -23,6 +24,7 @@ class AlertCreateInterface extends StatelessWidget {
     required this.onSubmit,
     required this.validator,
     required this.textingController,
+    required this.isLoading,
   });
 
   Widget _buildMainContent() {
@@ -76,14 +78,17 @@ class AlertCreateInterface extends StatelessWidget {
       appBar: baseAppBar(title: 'Criar alerta'),
       body: Column(
         children: [
-          Expanded(
-              child:
-                  _buildMainContent()), 
+          _buildMainContent(),
+          const Spacer(),
           Padding(
-            padding:
-                const EdgeInsets.all(20.0), 
-            child: Button(onPress: onSubmit, title: 'ENVIAR'),
-          )
+            padding: EdgeInsets.all(20.0),
+            child: Button(
+              onPress: onSubmit,
+              title: 'ENVIAR',
+              isLoading: isLoading,
+            ),
+          ),
+          const Spacer(),
         ],
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:eiviznho/app/routing/routes.dart';
 import 'package:eiviznho/app/ui/alert_list/containers/alert_list_container.dart';
+import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,14 +10,17 @@ class AlertListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: baseAppBar(title: "Alertas"),
       body: SafeArea(
         child: AlertListContainer(),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: AppColors.backgroundPrimary,
         onPressed: () =>
             context.go('${Routes.alertsList}/${Routes.createAlert}'),
-        child: const Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+          color: AppColors.textPrimary,
+        ),
       ),
     );
   }

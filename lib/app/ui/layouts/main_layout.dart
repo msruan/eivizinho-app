@@ -99,8 +99,8 @@ class _MainLayoutBottomBarState extends State<_MainLayoutBottomBar> {
       currentIndex: currentIndex,
       backgroundColor: Colors.blueGrey,
       type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.lightBlueAccent,
-      unselectedItemColor: Colors.grey,
+      selectedItemColor:  Colors.white,
+      unselectedItemColor: const Color.fromARGB(255, 187, 185, 185),
       items: icons,
       onTap: changeTab,
     );
