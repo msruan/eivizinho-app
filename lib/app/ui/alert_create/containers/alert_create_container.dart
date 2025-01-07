@@ -1,4 +1,5 @@
 import 'package:eiviznho/app/config/dependencies.dart';
+import 'package:eiviznho/app/data/dtos/alerts/create_alert_dto.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/data/repositories/alert_category/alert_category_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_category_entity.dart';
@@ -114,15 +115,13 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
       return;
     }
 
-    final requestData = Alert(
-      category: selectedAlertType!.id,
-      description: description,
-      dtHr: DateTime.now(),
-      local: 'Morada nova',
+    final requestData = CreateAlertRequestDTO(
+      name: description,
+      categories: [selectedAlertType!],
       media: selectedMedia,
     );
 
-    await _alertRepository.createAlert(requestData.toJson());
+    await _alertRepository.createAlert(requestData);
 
     _formKey.currentState?.reset();
     _descriptionController.clear();

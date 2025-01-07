@@ -21,7 +21,7 @@ class AlertItem extends StatelessWidget {
     final date = DateFormat('dd/MM/yyyy').format(alert.dtHr);
     final time = DateFormat('HH:mm').format(alert.dtHr);
 
-    final icon = alertIcons[alert.category] ?? Icons.warning_rounded;
+    final icon = alertIcons[alert.category.name] ?? Icons.warning_rounded;
 
     return InkWell(
       onTap: () => showDialog(
@@ -37,7 +37,7 @@ class AlertItem extends StatelessWidget {
                 children: [
                   Icon(icon, color: AppColors.textPrimary, size: 24),
                   Text(
-                    alert.category,
+                    alert.category.name,
                     style: Theme.of(context)
                         .textTheme
                         .bodySmall

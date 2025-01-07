@@ -8,15 +8,15 @@ class AlertAPI {
   static final String? baseUrl = dotenv.env['BASE_URL'];
 
   static Future<http.Response> getAlerts() async {
-    final url = Uri.parse('$baseUrl/alert');
+    final url = Uri.parse('$baseUrl/alerts');
     try {
       final response =
           await http.get(url, headers: {'Content-Type': 'application/json'});
       if (response.statusCode == 200) {
+        print("fetch getAllAlerts 200 OK");
         return response;
       } else {
-        throw Exception(
-            'Falha ao obter alertas: ${response.statusCode}');
+        throw Exception('Falha ao obter alertas: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Erro GET Alerta: $e');
@@ -35,8 +35,7 @@ class AlertAPI {
       if (response.statusCode == 201) {
         return response;
       } else {
-        throw Exception(
-            'Falha ao criar alerta: ${response.statusCode}');
+        throw Exception('Falha ao criar alerta: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Erro POST JSON Alerta: $e');

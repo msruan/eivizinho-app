@@ -18,7 +18,7 @@ class AlertDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = alertIcons[alert.category] ?? Icons.warning_rounded;
+    final icon = alertIcons[alert.category.name] ?? Icons.warning_rounded;
     final date = DateFormat('dd/MM/yyyy').format(alert.dtHr);
     final time = DateFormat('HH:mm').format(alert.dtHr);
 
@@ -68,7 +68,7 @@ class AlertDetails extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          alert.category,
+                          alert.category.name,
                           style: AppTextStyles.titleExtraSmall,
                           textAlign: TextAlign.left,
                         ),

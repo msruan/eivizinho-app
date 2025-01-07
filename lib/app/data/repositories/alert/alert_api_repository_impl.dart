@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:eiviznho/app/config/api/alert.dart';
+import 'package:eiviznho/app/data/dtos/alerts/create_alert_dto.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 
@@ -12,9 +13,13 @@ class AlertRepositoryImpl implements AlertRepository {
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
 
+      print(body);
+
+      print("body acaba aqui");
+
       final List<Alert> alerts =
           body.map((alert) => Alert.fromJson(alert)).toList();
-
+      print(alerts);
       return alerts;
     }
 
@@ -22,15 +27,16 @@ class AlertRepositoryImpl implements AlertRepository {
   }
 
   @override
-  Future<Alert> createAlert(Map<String, dynamic> body) async {
+  Future<Alert> createAlert(CreateAlertRequestDTO body) async {
     late String responseBody;
 
-    if (body['media'] == null || body['media'].isEmpty) {
-      final response = await AlertAPI.postAlertAsJson(body);
-      responseBody = response.body;
+    final payload = body.toJson();
 
+    if (body.media == null || body.media!.isEmpty) {
+      final response = await AlertAPI.postAlertAsJson(payload);
+      responseBody = response.body;
     } else {
-      final response = await AlertAPI.postAlertAsMultipart(body);
+      final response = await AlertAPI.postAlertAsMultipart(payload);
       responseBody = await response.stream.bytesToString();
     }
 

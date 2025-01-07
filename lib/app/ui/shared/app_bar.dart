@@ -1,4 +1,3 @@
-import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:eiviznho/app/ui/themes/text_styles.dart';
 import 'package:flutter/material.dart';
 
