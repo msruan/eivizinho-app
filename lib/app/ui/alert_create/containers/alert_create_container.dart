@@ -5,7 +5,9 @@ import 'package:eiviznho/app/data/repositories/alert_category/alert_category_rep
 import 'package:eiviznho/app/domain/entities/alert_category_entity.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/ui/alert_create/interfaces/alert_create_interface.dart';
+import 'package:eiviznho/app/utils/get_current_position.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:june/june.dart';
 
@@ -36,7 +38,7 @@ class MediaState extends JuneState {
         setState();
       }
     } catch (e) {
-      print('Erro no pick da galeria... $e');
+      throw Exception('Erro no pick da galeria... $e');
     }
   }
 
@@ -66,8 +68,8 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
 
   late TextEditingController _descriptionController;
 
-  var dropdownState = June.getState(() => DropdownState());
-  var mediaState = June.getState(() => MediaState());
+  DropdownState dropdownState = June.getState(() => DropdownState());
+  MediaState mediaState = June.getState(() => MediaState());
 
   @override
   void initState() {
@@ -115,16 +117,22 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
       return;
     }
 
+    final Position currentPosition = await getCurrentPosition();
+
     final requestData = CreateAlertRequestDTO(
       name: description,
       categories: [selectedAlertType!],
       media: selectedMedia,
+      location: Location(
+          latitude: currentPosition.latitude,
+          longitude: currentPosition.longitude),
     );
 
     await _alertRepository.createAlert(requestData);
 
     _formKey.currentState?.reset();
     _descriptionController.clear();
+    dropdownState.updateTypes([]);
     mediaState.clear();
   }
 

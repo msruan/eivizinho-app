@@ -13,13 +13,8 @@ class AlertRepositoryImpl implements AlertRepository {
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
 
-      print(body);
-
-      print("body acaba aqui");
-
       final List<Alert> alerts =
           body.map((alert) => Alert.fromJson(alert)).toList();
-      print(alerts);
       return alerts;
     }
 

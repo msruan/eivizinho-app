@@ -42,17 +42,21 @@ class Alert {
 }
 
 class Location {
-  final String description;
+  final String? description;
   final double latitude;
   final double longitude;
 
-  Location(
-      {required this.description,
-      required this.latitude,
-      required this.longitude});
+  Location({this.description, required this.latitude, required this.longitude});
 
   Location.fromJson(Map<String, dynamic> json)
       : description = json['description'] as String,
         latitude = json['coord']['latitude'] as double,
         longitude = json['coord']['longitude'] as double;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'latitude': latitude,
+      'longitude': longitude,
+    };
+  }
 }

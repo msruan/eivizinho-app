@@ -13,7 +13,6 @@ class AlertAPI {
       final response =
           await http.get(url, headers: {'Content-Type': 'application/json'});
       if (response.statusCode == 200) {
-        print("fetch getAllAlerts 200 OK");
         return response;
       } else {
         throw Exception('Falha ao obter alertas: ${response.statusCode}');
@@ -25,7 +24,7 @@ class AlertAPI {
 
   static Future<http.Response> postAlertAsJson(
       Map<String, dynamic> body) async {
-    final url = Uri.parse('$baseUrl/alert');
+    final url = Uri.parse('$baseUrl/alerts');
     try {
       final response = await http.post(
         url,
