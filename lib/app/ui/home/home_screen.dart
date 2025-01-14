@@ -1,3 +1,4 @@
+import 'package:eiviznho/app/ui/home/containers/home_screen_container.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -5,13 +6,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: const Placeholder(
-        fallbackHeight: 120,
-        fallbackWidth: 120,
-      )),
-      // bottomNavigationBar: AppBaseScreen.bottomNavigationBar,
-    );
+    return HomeScreenContainer();
   }
 }

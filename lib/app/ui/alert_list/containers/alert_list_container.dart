@@ -5,7 +5,7 @@ import 'package:eiviznho/app/ui/alert_list/interfaces/alert_list_interface.dart'
 import 'package:flutter/material.dart';
 import 'package:june/june.dart';
 
-class AlertsState extends JuneState {
+class AlertsListState extends JuneState {
   List<Alert> alerts = [];
   bool isLoading = false;
 }
@@ -28,7 +28,7 @@ class _AlertListContainerState extends State<AlertListContainer> {
   }
 
   Future<void> _fetchAlerts() async {
-    AlertsState alertsState = June.getState(() => AlertsState());
+    AlertsListState alertsState = June.getState(() => AlertsListState());
 
     try {
       alertsState
@@ -54,8 +54,8 @@ class _AlertListContainerState extends State<AlertListContainer> {
   @override
   Widget build(BuildContext context) {
     return JuneBuilder(
-      () => AlertsState(),
-      builder: (AlertsState state) {
+      () => AlertsListState(),
+      builder: (AlertsListState state) {
         return AlertListInterface(
           isLoading: state.isLoading,
           alerts: state.alerts,
