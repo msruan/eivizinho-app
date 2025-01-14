@@ -1,6 +1,6 @@
 name: eiviznho
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
@@ -10,9 +10,19 @@ dependencies:
   flutter:
     sdk: flutter
   get_it: ^8.0.3
+  go_router: ^14.6.2
   google_fonts: ^6.2.1
   http: ^1.2.2
   intl: ^0.20.1
+  june: ^1.0.0+1
+  introduction_screen: ^3.1.14
+  flutter_native_splash: ^2.4.4
+  image_picker: ^1.1.2
+  http_parser: ^4.1.2
+  flutter_dotenv: ^5.2.1
+  geolocator: ^13.0.2
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +31,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/welcome.png
+    - .env

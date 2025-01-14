@@ -1,31 +1,10 @@
-import 'package:eiviznho/app/styles/text.styles.dart';
-import 'package:eiviznho/app/ui/pages/AlertList/alert_list_injection.dart';
-import 'package:eiviznho/app/ui/pages/AlertList/alert_list_page.dart';
-import 'package:flutter/material.dart';
+import 'package:eiviznho/app/app.dart';
+import 'package:eiviznho/app/config/dependencies.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
-  setupAlertListInject();
-  runApp(const MainApp());
-}
-
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Meili",
-      theme: ThemeData(
-        primaryColor: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        textTheme: TextTheme(
-          bodyMedium: AppTextStyles.bodyMedium,
-          bodySmall: AppTextStyles.bodySmall,
-          titleLarge: AppTextStyles.titleLarge,
-          titleMedium: AppTextStyles.titleMedium,
-        ),
-      ),
-      home: const AlertListPage(),
-    );
-  }
+void main() async {
+  await dotenv.load();
+  setupGetItInject();
+  runApp(const App());
 }
