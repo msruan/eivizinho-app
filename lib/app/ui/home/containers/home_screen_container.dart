@@ -1,28 +1,27 @@
+import 'dart:async';
+
 import 'package:eiviznho/app/config/dependencies.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
-import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/ui/home/interfaces/home_screen_interface.dart';
-import 'package:eiviznho/app/utils/get_current_position.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:june/june.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class AlertsHomeState extends JuneState {
-  List<Alert> alerts = [];
-  bool isLoading = false;
-}
+import '../../../utils/get_current_position.dart';
 
 class HomeScreenContainer extends StatefulWidget {
   const HomeScreenContainer({super.key});
 
   @override
-  State<HomeScreenContainer> createState() => _HomeScreenContainerState();
+  State<HomeScreenContainer> createState() => HomeScreenContainerState();
 }
 
-class _HomeScreenContainerState extends State<HomeScreenContainer> {
-  Position? currentPosition;
+class HomeScreenContainerState extends State<HomeScreenContainer> {
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
+  late AlertRepository _alertRepository;
+  Position? _currentPosition;
+  Set<Marker> _markers = {};
 
   @override
   void initState() {
@@ -32,26 +31,31 @@ class _HomeScreenContainerState extends State<HomeScreenContainer> {
     _getUserLocation();
   }
 
+  final Map<String, double> categoryColors = {
+    'assalto': BitmapDescriptor.hueRed,
+    'incêndio': BitmapDescriptor.hueOrange,
+    'acidente': BitmapDescriptor.hueYellow,
+    'furto': BitmapDescriptor.hueBlue,
+  };
+
   Future<void> _fetchAlerts() async {
-    AlertsHomeState alertsState = June.getState(() => AlertsHomeState());
     try {
-      alertsState
-        ..isLoading = true
-        ..setState();
-
-      final result = await _alertRepository.getAllAlerts();
-
-      alertsState
-        ..alerts = result
-        ..setState();
+      final alerts = await _alertRepository.getAllAlerts();
+      setState(() {
+        _markers = alerts.map((alert) {
+          final hue =
+              categoryColors[alert.category.name] ?? BitmapDescriptor.hueViolet;
+          return Marker(
+            markerId: MarkerId(alert.id.toString()),
+            position: LatLng(alert.local.latitude, alert.local.longitude),
+            infoWindow: InfoWindow(
+                title: alert.category.name, snippet: alert.description),
+            icon: BitmapDescriptor.defaultMarkerWithHue(hue),
+          );
+        }).toSet();
+      });
     } catch (e) {
-      alertsState
-        ..alerts = []
-        ..setState();
-    } finally {
-      alertsState
-        ..isLoading = false
-        ..setState();
+      print("Erro ao buscar alertas: $e");
     }
   }
 
@@ -59,35 +63,32 @@ class _HomeScreenContainerState extends State<HomeScreenContainer> {
     try {
       final position = await getCurrentPosition();
       setState(() {
-        currentPosition = position;
+        _currentPosition = position;
       });
+      _moveCameraToPosition(position);
     } catch (e) {
       print("Erro ao obter localização: $e");
     }
   }
 
-  late AlertRepository _alertRepository;
-
-  List<Marker> _buildMarkers() {
-    AlertsHomeState alertsState = June.getState(() => AlertsHomeState());
-
-    return alertsState.alerts
-        .map((alert) => Marker(
-              width: 80.0,
-              height: 80.0,
-              point: LatLng(alert.local.latitude, alert.local.longitude),
-              child: Icon(
-                Icons.location_pin,
-                color: Colors.red,
-                size: 40.0,
-              ),
-            ))
-        .toList();
+  Future<void> _moveCameraToPosition(Position position) async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(position.latitude, position.longitude),
+          zoom: 16.0,
+        ),
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return HomeScreenInterface(
-        currentPosition: currentPosition, markers: _buildMarkers());
+        currentPosition: _currentPosition,
+        markers: _markers,
+        controller: _controller,
+        moveCameraToPosition: _moveCameraToPosition);
   }
 }
