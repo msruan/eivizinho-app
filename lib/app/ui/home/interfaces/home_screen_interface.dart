@@ -33,6 +33,7 @@ class HomeScreenInterface extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: currentPosition == null
           ? const Center(
               child: CircularProgressIndicator(
@@ -52,66 +53,37 @@ class HomeScreenInterface extends StatelessWidget {
                     zoom: 14.0,
                   ),
                   markers: markers,
+                  myLocationEnabled: true,
+                  zoomControlsEnabled: false,
+                  compassEnabled: false,
                   onMapCreated: (GoogleMapController control) {
                     controller.complete(control);
                   },
                 ),
                 Positioned(
                   top: 16,
-                  right: 16,
-                  child: SizedBox(
-                    height: 40,
-                    width: 40,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        if (currentPosition != null) {
-                          moveCameraToPosition(currentPosition!);
-                        }
-                      },
-                      backgroundColor: AppColors.backgroundPrimary,
-                      elevation: 4,
-                      child: const Icon(
-                        color: AppColors.textPrimary,
-                        Icons.my_location,
-                        size: 20,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 0,
                   left: 16,
                   right: 16,
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      if (suggestions.isNotEmpty)
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            maxHeight: 200,
-                          ),
-                          child: Container(
-                            color: Colors.white,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: suggestions.length,
-                              itemBuilder: (context, index) {
-                                final suggestion = suggestions[index];
-                                return ListTile(
-                                  title: Text(suggestion['description']!,
-                                      style: AppTextStyles.bodyMedium),
-                                  onTap: () =>
-                                      onSuggestionTap(suggestion['place_id']!),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
                       TextField(
                         controller: textController,
                         onChanged: getSuggestions,
                         focusNode: focusNode,
                         decoration: InputDecoration(
+                          labelStyle: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                            shadows: [
+                              Shadow(
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 1.0,
+                                color: Colors.black,
+                              ),
+                            ],
+                          ),
                           hintText: 'Buscar localização...',
                           fillColor: Colors.white,
                           filled: true,
@@ -123,6 +95,37 @@ class HomeScreenInterface extends StatelessWidget {
                           suffixIcon: const Icon(Icons.search),
                         ),
                       ),
+                      SizedBox(height: 6),
+                      if (suggestions.isNotEmpty)
+                        ConstrainedBox(
+                          constraints: const BoxConstraints(
+                            maxHeight: 250,
+                          ),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              itemCount: suggestions.length,
+                              itemBuilder: (context, index) {
+                                final suggestion = suggestions[index];
+                                return ListTile(
+                                  title: Text(suggestion['description']!,
+                                      style: AppTextStyles.bodyMedium),
+                                  onTap: () =>
+                                      onSuggestionTap(suggestion['place_id']!),
+                                );
+                              },
+                              separatorBuilder: (context, index) => Divider(
+                                height: 1,
+                                color: Colors.grey[300],
+                                thickness: 1,
+                              ),
+                            ),
+                          ),
+                        ),
                     ],
                   ),
                 ),
