@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:eiviznho/app/config/dependencies.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
+import 'package:eiviznho/app/domain/entities/alert_entity.dart';
+import 'package:eiviznho/app/ui/alert_list/components/alert_details.dart';
 import 'package:eiviznho/app/ui/home/interfaces/home_screen_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -72,17 +74,24 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
           final hue =
               categoryColors[alert.category.name] ?? BitmapDescriptor.hueViolet;
           return Marker(
-            markerId: MarkerId(alert.id.toString()),
-            position: LatLng(alert.local.latitude, alert.local.longitude),
-            infoWindow: InfoWindow(
-                title: alert.category.name, snippet: alert.description),
-            icon: BitmapDescriptor.defaultMarkerWithHue(hue),
-          );
+              markerId: MarkerId(alert.id.toString()),
+              position: LatLng(alert.local.latitude, alert.local.longitude),
+              icon: BitmapDescriptor.defaultMarkerWithHue(hue),
+              onTap: () => _showAlertDetailsDialog(context, alert));
         }).toSet();
       });
     } catch (e) {
       print("Erro ao buscar alertas para o mapa: $e");
     }
+  }
+
+  void _showAlertDetailsDialog(BuildContext context, Alert alert) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDetails(alert: alert);
+      },
+    );
   }
 
   Future<void> _getUserLocation() async {
@@ -133,7 +142,6 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-
         final predictions = json.decode(response.body)['predictions'] as List;
 
         setState(() {
@@ -144,7 +152,6 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
                   })
               .toList();
         });
-        
       } else {
         print('Erro na API do Google Places: ${response.body}');
       }
@@ -154,19 +161,16 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
   }
 
   Future<Position?> _getPlaceDetails(String placeId) async {
-    
     final String url =
         'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey';
 
     try {
-
       final response = await http.get(Uri.parse(url));
 
       if (response.statusCode == 200) {
-
         final result = json.decode(response.body)['result'];
         final location = result['geometry']['location'];
-        
+
         return Position(
           accuracy: 0,
           altitude: 0,
@@ -180,11 +184,16 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
           timestamp: DateTime.now(),
         );
       }
-
     } catch (e) {
       print('Erro ao buscar detalhes do lugar: $e');
     }
     return null;
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose(); // Descartando o FocusNode corretamente
+    super.dispose();
   }
 
   @override
