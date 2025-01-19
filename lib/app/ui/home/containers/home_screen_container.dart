@@ -1,11 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:eiviznho/app/config/dependencies.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/ui/home/interfaces/home_screen_interface.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:http/http.dart' as http;
 
 import '../../../utils/get_current_position.dart';
 
@@ -17,19 +20,18 @@ class HomeScreenContainer extends StatefulWidget {
 }
 
 class HomeScreenContainerState extends State<HomeScreenContainer> {
+  final String apiKey = dotenv.env['GOOGLE_API_KEY'] ?? '';
+
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
-  late AlertRepository _alertRepository;
   Position? _currentPosition;
   Set<Marker> _markers = {};
 
-  @override
-  void initState() {
-    super.initState();
-    _alertRepository = injector.get<AlertRepository>();
-    _fetchAlerts();
-    _getUserLocation();
-  }
+  late AlertRepository _alertRepository;
+
+  List<Map<String, dynamic>> _suggestions = [];
+  final TextEditingController _textController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
 
   final Map<String, double> categoryColors = {
     'assalto': BitmapDescriptor.hueRed,
@@ -37,6 +39,30 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
     'acidente': BitmapDescriptor.hueYellow,
     'furto': BitmapDescriptor.hueBlue,
   };
+
+  @override
+  void initState() {
+    super.initState();
+    _alertRepository = injector.get<AlertRepository>();
+    _fetchAlerts();
+    _getUserLocation();
+
+    _textController.addListener(() {
+      if (_textController.text.isEmpty) {
+        setState(() {
+          _suggestions = [];
+        });
+      }
+    });
+
+    _focusNode.addListener(() {
+      if (!_focusNode.hasFocus) {
+        setState(() {
+          _suggestions = [];
+        });
+      }
+    });
+  }
 
   Future<void> _fetchAlerts() async {
     try {
@@ -55,7 +81,7 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
         }).toSet();
       });
     } catch (e) {
-      print("Erro ao buscar alertas: $e");
+      print("Erro ao buscar alertas para o mapa: $e");
     }
   }
 
@@ -67,7 +93,7 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
       });
       _moveCameraToPosition(position);
     } catch (e) {
-      print("Erro ao obter localização: $e");
+      print("Erro ao obter localização do usuário: $e");
     }
   }
 
@@ -83,12 +109,104 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
     );
   }
 
+  Future<void> _getSuggestions(String input) async {
+    if (input.isEmpty) {
+      setState(() {
+        _suggestions = [];
+      });
+      return;
+    }
+
+    const double latitudeTeresina = -5.0919;
+    const double longitudeTeresina = -42.8034;
+    const int searchRadius = 20000;
+
+    final String url =
+        'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input'
+        '&key=$apiKey'
+        '&location=$latitudeTeresina,$longitudeTeresina'
+        '&radius=$searchRadius'
+        '&language=pt';
+    '&types=address';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+
+        final predictions = json.decode(response.body)['predictions'] as List;
+
+        setState(() {
+          _suggestions = predictions
+              .map((item) => {
+                    'description': item['description'],
+                    'place_id': item['place_id'],
+                  })
+              .toList();
+        });
+        
+      } else {
+        print('Erro na API do Google Places: ${response.body}');
+      }
+    } catch (e) {
+      print('Erro ao buscar sugestões: $e');
+    }
+  }
+
+  Future<Position?> _getPlaceDetails(String placeId) async {
+    
+    final String url =
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&key=$apiKey';
+
+    try {
+
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+
+        final result = json.decode(response.body)['result'];
+        final location = result['geometry']['location'];
+        
+        return Position(
+          accuracy: 0,
+          altitude: 0,
+          altitudeAccuracy: 0,
+          heading: 0,
+          headingAccuracy: 0,
+          speed: 0,
+          speedAccuracy: 0,
+          latitude: location['lat'],
+          longitude: location['lng'],
+          timestamp: DateTime.now(),
+        );
+      }
+
+    } catch (e) {
+      print('Erro ao buscar detalhes do lugar: $e');
+    }
+    return null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return HomeScreenInterface(
-        currentPosition: _currentPosition,
-        markers: _markers,
-        controller: _controller,
-        moveCameraToPosition: _moveCameraToPosition);
+      currentPosition: _currentPosition,
+      markers: _markers,
+      controller: _controller,
+      textController: _textController,
+      getSuggestions: _getSuggestions,
+      moveCameraToPosition: _moveCameraToPosition,
+      suggestions: _suggestions,
+      onSuggestionTap: (placeId) async {
+        setState(() {
+          _suggestions = [];
+        });
+        final position = await _getPlaceDetails(placeId);
+        if (position != null) {
+          _moveCameraToPosition(position);
+        }
+      },
+      focusNode: _focusNode,
+    );
   }
 }
