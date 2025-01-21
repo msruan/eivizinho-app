@@ -1,6 +1,8 @@
+import 'package:eiviznho/app/routing/routes.dart';
 import 'package:eiviznho/app/ui/login/interfaces/login_interface.dart';
 import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginContainer extends StatefulWidget {
   const LoginContainer({super.key});
@@ -30,9 +32,13 @@ class _LoginContainerState extends State<LoginContainer> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Login realizado com sucesso!!'),
-            backgroundColor: AppColors.secondaryBlue,
+            backgroundColor: AppColors.green,
+            duration: Duration(seconds: 2),
           ),
         );
+
+        Future.delayed(Duration(seconds: 2))
+            .then((value) => GoRouter.of(context).go(Routes.home));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

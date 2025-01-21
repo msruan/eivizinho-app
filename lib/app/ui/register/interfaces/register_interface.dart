@@ -1,9 +1,10 @@
 import 'package:eiviznho/app/routing/routes.dart';
 import 'package:eiviznho/app/ui/shared/app_bar.dart';
-import 'package:eiviznho/app/ui/shared/button_widget.dart';
 import 'package:eiviznho/app/ui/shared/auth_text_field.dart';
+import 'package:eiviznho/app/ui/shared/button_widget.dart';
 import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:eiviznho/app/ui/themes/text_styles.dart';
+import 'package:eiviznho/app/utils/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -108,10 +109,7 @@ class RegisterInterface extends StatelessWidget {
               labelText: 'Nome',
               obscureText: false,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Insira seu nome';
-                }
-                return null;
+                return validateName(value);
               },
             ),
             const SizedBox(height: 16.0),
@@ -121,13 +119,7 @@ class RegisterInterface extends StatelessWidget {
               isCPFField: true,
               obscureText: false,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Insira seu CPF';
-                } else if (!RegExp(r'^\d{3}\.\d{3}\.\d{3}-\d{2}$')
-                    .hasMatch(value)) {
-                  return 'Insira um CPF válido';
-                }
-                return null;
+                return validateCPF(value);
               },
             ),
             const SizedBox(height: 16.0),
@@ -136,12 +128,7 @@ class RegisterInterface extends StatelessWidget {
               labelText: 'E-mail',
               obscureText: false,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Insira seu e-mail';
-                } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                  return 'Por favor, insira um e-mail válido';
-                }
-                return null;
+                return validateEmail(value);
               },
             ),
             const SizedBox(height: 16.0),
@@ -150,28 +137,18 @@ class RegisterInterface extends StatelessWidget {
               labelText: 'Senha',
               obscureText: true,
               validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Insira sua senha';
-                } else if (value.length < 6) {
-                  return 'A senha deve ter pelo menos 6 caracteres';
-                }
-                return null;
+                return validatePassword(value);
               },
             ),
             const SizedBox(height: 16.0),
             buildInputField(
-              controller: confirmPasswordController,
-              labelText: 'Confirmar senha',
-              obscureText: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Confirme sua senha';
-                } else if (value != passwordController.text) {
-                  return 'As senhas não coincidem';
-                }
-                return null;
-              },
-            ),
+                controller: confirmPasswordController,
+                labelText: 'Confirmar senha',
+                obscureText: true,
+                validator: (value) {
+                  return validateConfirmPassword(
+                      value, passwordController.text);
+                }),
             const SizedBox(height: 24.0),
             _buildRegisterButton(),
           ],
