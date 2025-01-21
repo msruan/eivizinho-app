@@ -91,7 +91,7 @@ class WelcomeScreen extends StatelessWidget {
           style: smallTextDecoration,
         ),
         ElevatedButton(
-          onPressed: () => context.go(Routes.home),
+          onPressed: () => context.go(Routes.login),
           style: ElevatedButton.styleFrom(
             backgroundColor: Color.fromRGBO(101, 172, 172, 100),
             shape: RoundedRectangleBorder(

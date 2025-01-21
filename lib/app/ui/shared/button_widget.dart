@@ -1,28 +1,33 @@
-import 'package:eiviznho/app/ui/themes/colors.dart';
+import 'package:eiviznho/app/ui/themes/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final VoidCallback onPress;
   final String title;
   final bool isLoading;
+  final Color backgroundColor;
+  final double height;
 
   const Button({
     super.key,
     required this.onPress,
     required this.title,
     this.isLoading = false,
+    required this.backgroundColor,
+    this.height = 36.0,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
           ),
-          backgroundColor: AppColors.primaryBlue,
+          backgroundColor: backgroundColor,
         ),
         onPressed: isLoading ? null : onPress,
         child: isLoading
@@ -36,8 +41,8 @@ class Button extends StatelessWidget {
               )
             : Text(
                 title,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.white, fontWeight: FontWeight.bold),
+                style: AppTextStyles.bodySmall
+                    .copyWith(color: Colors.white, fontWeight: FontWeight.w600),
               ),
       ),
     );

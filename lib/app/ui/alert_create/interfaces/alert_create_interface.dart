@@ -2,9 +2,10 @@ import 'package:eiviznho/app/ui/alert_create/components/field_box_widget.dart';
 import 'package:eiviznho/app/ui/alert_create/components/image_input.widget.dart';
 import 'package:eiviznho/app/ui/alert_create/components/text_input_widget.dart';
 import 'package:eiviznho/app/ui/alert_create/containers/alert_create_container.dart';
+import 'package:eiviznho/app/ui/shared/app_bar.dart';
 import 'package:eiviznho/app/ui/shared/button_widget.dart';
 import 'package:eiviznho/app/ui/shared/dropdown_widget.dart';
-import 'package:eiviznho/app/ui/shared/app_bar.dart';
+import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class AlertCreateInterface extends StatelessWidget {
@@ -83,6 +84,7 @@ class AlertCreateInterface extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(20.0),
             child: Button(
+              backgroundColor: AppColors.primaryBlue,
               onPress: onSubmit,
               title: 'ENVIAR',
               isLoading: isLoading,
