@@ -26,7 +26,7 @@ class _RegisterContainerState extends State<RegisterContainer> {
       if (!_formKey.currentState!.validate()) {
         return;
       }
-      
+
       await AuthAPI.registerUser(
         fullName: _nameController.text,
         cpf: _cpfController.text,
