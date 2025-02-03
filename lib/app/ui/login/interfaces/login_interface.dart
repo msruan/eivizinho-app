@@ -83,7 +83,7 @@ class LoginInterface extends StatelessWidget {
           style: AppTextStyles.titleExtraSmall,
         ),
         InkWell(
-          onTap: () => context.go(Routes.register),
+          onTap: () => context.replace(Routes.register),
           child: Text(
             'Registre-se',
             style: GoogleFonts.inter(

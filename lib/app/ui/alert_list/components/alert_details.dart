@@ -97,7 +97,7 @@ class AlertDetails extends StatelessWidget {
                   height: 15,
                 ),
                 Text(
-                  'Relatado por Maria Silva',
+                  'Relatado por Asa',
                   style: AppTextStyles.bodySmall,
                 ),
               ],

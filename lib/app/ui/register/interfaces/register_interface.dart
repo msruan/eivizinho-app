@@ -82,7 +82,7 @@ class RegisterInterface extends StatelessWidget {
           style: AppTextStyles.titleExtraSmall,
         ),
         InkWell(
-          onTap: () => context.go(Routes.login),
+          onTap: () => context.replace(Routes.login),
           child: Text(
             'Faça login',
             style: GoogleFonts.inter(

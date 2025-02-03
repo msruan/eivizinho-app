@@ -46,7 +46,7 @@ class _RegisterContainerState extends State<RegisterContainer> {
         ),
       );
       // ignore: use_build_context_synchronously
-      context.go(Routes.login);
+      context.push(Routes.login);
     } catch (e) {
       String errorMessage = 'Erro ao registrar usuário. Tente novamente.';
 

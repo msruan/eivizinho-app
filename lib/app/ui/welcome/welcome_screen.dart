@@ -43,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
     final buttonTextDecoration = GoogleFonts.inter(
       fontSize: 20,
       fontWeight: FontWeight.w600,
-      color: Colors.white,
+      color: Colors.black,
     );
 
     Widget logo = Column(
@@ -91,7 +91,7 @@ class WelcomeScreen extends StatelessWidget {
           style: smallTextDecoration,
         ),
         ElevatedButton(
-          onPressed: () => context.go(Routes.login),
+          onPressed: () => context.go(Routes.home),
           style: ElevatedButton.styleFrom(
             backgroundColor: Color.fromRGBO(101, 172, 172, 100),
             shape: RoundedRectangleBorder(

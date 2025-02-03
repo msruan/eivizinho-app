@@ -37,4 +37,5 @@ flutter:
 
   assets:
     - assets/images/welcome.png
+    - assets/images/no-profile-pic.png
     - .env

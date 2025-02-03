@@ -1,3 +1,4 @@
+import 'package:eiviznho/app/ui/shared/drawer.dart';
 import 'package:flutter/material.dart';
 
 class NotificationsScreen extends StatelessWidget {
@@ -12,7 +13,7 @@ class NotificationsScreen extends StatelessWidget {
         fallbackHeight: 120,
         fallbackWidth: 120,
       )),
-      // bottomNavigationBar: AppBaseScreen.bottomNavigationBar,
+      drawer: MainDrawer()
     );
   }
 }
