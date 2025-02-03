@@ -45,10 +45,10 @@ class _RegisterContainerState extends State<RegisterContainer> {
           backgroundColor: AppColors.green,
         ),
       );
-      // ignore: use_build_context_synchronously
       context.go(Routes.login);
     } catch (e) {
       String errorMessage = 'Erro ao registrar usuário. Tente novamente.';
+      print(e);
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

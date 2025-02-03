@@ -30,7 +30,8 @@ class AuthAPI {
 
       print(response);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
+        print("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
         return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
         throw Exception(
