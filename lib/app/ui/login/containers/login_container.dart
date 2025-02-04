@@ -39,7 +39,7 @@ class _LoginContainerState extends State<LoginContainer> {
       final response = await http.post(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({"cpf": email, "password": password}),
+        body: jsonEncode({"email": email, "password": password}),
       );
 
       if (response.statusCode == 200) {
@@ -55,8 +55,8 @@ class _LoginContainerState extends State<LoginContainer> {
         context.go(Routes.home);
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('E-mail ou senha inválidos!!'),
+          SnackBar(
+            content: Text('E-mail ou senha inválidos!'),
             backgroundColor: AppColors.red,
           ),
         );

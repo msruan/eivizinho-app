@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
+import 'package:eiviznho/app/ui/alert_page/alert_screen.dart';
 import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:eiviznho/app/ui/themes/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
 class AlertDetails extends StatelessWidget {
@@ -15,6 +19,9 @@ class AlertDetails extends StatelessWidget {
     'Acidente': Icons.local_hospital,
     'Assalto': Icons.warning_rounded,
   };
+
+  final Completer<GoogleMapController> _controller =
+      Completer<GoogleMapController>();
 
   @override
   Widget build(BuildContext context) {
@@ -52,45 +59,80 @@ class AlertDetails extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  spacing: 18,
-                  children: [
-                    SizedBox(
-                      height: 50,
-                      width: 50,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey.withAlpha(15),
-                        child:
-                            Icon(icon, color: AppColors.textPrimary, size: 18),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => AlertPageScreen(
+                          alert: alert,
+                        ), // O widget que você deseja empurrar
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          alert.category.name,
-                          style: AppTextStyles.titleExtraSmall,
-                          textAlign: TextAlign.left,
-                        ),
-                        Text('$time • $date')
-                      ],
-                    )
-                  ],
+                    );
+                  },
+                  child: Column(
+                    children: [
+                      Row(
+                        spacing: 18,
+                        children: [
+                          SizedBox(
+                            height: 50,
+                            width: 50,
+                            child: CircleAvatar(
+                              backgroundColor: Colors.grey.withAlpha(15),
+                              child: Icon(icon,
+                                  color: AppColors.textPrimary, size: 18),
+                            ),
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                alert.category.name,
+                                style: AppTextStyles.titleExtraSmall,
+                                textAlign: TextAlign.left,
+                              ),
+                              Text('$time • $date')
+                            ],
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Text(
+                        alert.description,
+                        style: AppTextStyles.bodyMedium,
+                      ),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 15,
                 ),
-                Text(
-                  alert.description,
-                  style: AppTextStyles.bodyMedium,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const SizedBox(
+                SizedBox(
                   width: double.infinity,
-                  child: Placeholder(
-                    fallbackHeight: 102,
+                  height: 102,
+                  child: GoogleMap(
+                    mapType: MapType.normal,
+                    initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                        alert.local.latitude,
+                        alert.local.longitude,
+                      ),
+                      zoom: 14.0,
+                    ),
+                    markers: {
+                      Marker(
+                          markerId: MarkerId("Alert position"),
+                          icon: BitmapDescriptor.defaultMarkerWithHue(
+                              BitmapDescriptor.hueViolet),
+                          position: LatLng(
+                              alert.local.latitude, alert.local.longitude))
+                    },
+                    onMapCreated: (GoogleMapController control) {
+                      _controller.complete(control);
+                    },
                   ),
                 ),
                 const SizedBox(

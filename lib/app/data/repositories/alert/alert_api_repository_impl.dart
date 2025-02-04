@@ -32,7 +32,6 @@ class AlertRepositoryImpl implements AlertRepository {
       final response = await AlertAPI.postAlertAsJson(payload);
       responseBody = response.body;
     } else {
-      print("entrei");
       final response = await AlertAPI.postAlertAsMultipart(payload);
       responseBody = await response.stream.bytesToString();
     }
