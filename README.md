@@ -9,17 +9,16 @@ Reach the main repository of [ei vizinho](https://github.com/liviaalves00/Engenh
 
 ## Features
 
-- Light/dark mode toggle
-- Live previews
-- Fullscreen mode
-- Cross platform
+- Alerts CRUD
+- Map preview of alerts
+- _~~Notifications~~_ (coming sooon)
 
 
 ## Screenshots
+<!-- 
+![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here) -->
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
+_Coming soon_
 ## Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file
@@ -61,13 +60,13 @@ flutter run
 - [@meidesu](https://www.github.com/meidesu)
 - [@msruan](https://www.github.com/msruan)
 
-
+<!-- 
 ## Support
 
 For support, email alma-team@gmail.com.
-
-
+ -->
+<!-- 
 ## Feedback
 
 If you have any feedback, please reach out to us at alma.team@gmail.com
-
+ -->
