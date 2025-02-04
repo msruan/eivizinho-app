@@ -9,7 +9,7 @@ class AlertTypeRepositoryImpl implements AlertCategoryRepository {
   @override
   Future<List<AlertCategory>> getAllAlertType() async {
     final String? url = dotenv.env['BASE_URL'];
-    final response = await http.get(Uri.parse('$url/alert_cantegory'));
+    final response = await http.get(Uri.parse('$url/alert_category'));
     if (response.statusCode == 200) {
       final body = jsonDecode(response.body) as List<dynamic>;
 
