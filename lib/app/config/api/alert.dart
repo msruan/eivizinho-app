@@ -26,6 +26,7 @@ class AlertAPI {
       Map<String, dynamic> body) async {
     final url = Uri.parse('$baseUrl/alerts');
     try {
+      body["categoriesId"] = body["categoriesId"].toString();
       final response = await http.post(
         url,
         headers: {
@@ -47,11 +48,8 @@ class AlertAPI {
 
   static Future<http.StreamedResponse> postAlertAsMultipart(
       Map<String, dynamic> body) async {
-    print("tbm entrei!");
     final url = Uri.parse('$baseUrl/alerts');
     var request = http.MultipartRequest('POST', url);
-
-    print(body);
 
     request.fields.addAll({
       'name': body['name'],
@@ -59,8 +57,6 @@ class AlertAPI {
       'approximateDtHr': body['approximateDtHr'],
       'location': body['location'],
     });
-
-    print("tbm to aqui!");
 
     for (var mediaPath in body['media']) {
       var file = await http.MultipartFile.fromPath(
@@ -70,7 +66,6 @@ class AlertAPI {
       );
       request.files.add(file);
     }
-    print("tbm to no final");
 
     request.headers.addAll({'Authorization': 'Bearer $token'});
 

@@ -49,18 +49,27 @@ class Location {
   }
 }
 
+enum MediaType { image, video, audio }
+
+MediaType strToMediaType(String type) {
+  if (type == "image") return MediaType.image;
+  if (type == "video") return MediaType.video;
+  if (type == "audio") return MediaType.audio;
+  throw Exception(
+      "Bad params! A non allowed type was passed to strToMediaType function!");
+}
+
 class Media {
   int id;
   String url;
-  Media({
-    required this.id,
-    required this.url,
-  });
+  MediaType type;
 
-  // factory Media.fromMap(Map<String, dynamic> map) {
-  //   return Media(
-  //     id: map['id'] as int,
-  //     url: map['url'] as String,
-  //   );
-  // }
+  Media({required this.id, required this.url, required this.type});
+
+  factory Media.fromMap(Map<String, dynamic> map) {
+    return Media(
+        id: map['id'] as int,
+        url: map['url'] as String,
+        type: strToMediaType(map['type'] as String));
+  }
 }
