@@ -1,4 +1,4 @@
-import 'package:eiviznho/app/ui/themes/colors.dart';
+import 'package:eiviznho/app/ui/shared/loading_widget.dart';
 import 'package:flutter/material.dart';
 
 class BaseList<T> extends StatelessWidget {
@@ -25,14 +25,7 @@ class BaseList<T> extends StatelessWidget {
         child: Column(
           children: [
             isLoading
-                ? const Expanded(
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.textPrimary,
-                        strokeWidth: 2,
-                      ),
-                    ),
-                  )
+                ? const Expanded(child: LoadingWidget())
                 : data.isEmpty
                     ? Expanded(
                         child: Center(
@@ -41,7 +34,7 @@ class BaseList<T> extends StatelessWidget {
                       )
                     : Expanded(
                         child: ListView.builder(
-                          padding: const EdgeInsets.only(top: 45),
+                          padding: const EdgeInsets.only(top: 12),
                           itemCount: data.length,
                           itemBuilder: (BuildContext context, int index) {
                             return Padding(
