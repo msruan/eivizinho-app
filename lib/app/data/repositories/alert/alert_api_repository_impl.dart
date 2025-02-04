@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:eiviznho/app/config/api/alert.dart';
 import 'package:eiviznho/app/data/dtos/alerts/create_alert_dto.dart';
+import 'package:eiviznho/app/data/dtos/alerts/get_all_alerts_dto.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 
@@ -14,7 +15,7 @@ class AlertRepositoryImpl implements AlertRepository {
       List<dynamic> body = jsonDecode(response.body);
 
       final List<Alert> alerts =
-          body.map((alert) => Alert.fromJson(alert)).toList();
+          body.map((alert) => GetAllAlertsResponseDTO.fromJson(alert)).toList();
       return alerts;
     }
 
@@ -31,11 +32,12 @@ class AlertRepositoryImpl implements AlertRepository {
       final response = await AlertAPI.postAlertAsJson(payload);
       responseBody = response.body;
     } else {
+      print("entrei");
       final response = await AlertAPI.postAlertAsMultipart(payload);
       responseBody = await response.stream.bytesToString();
     }
 
     final Map<String, dynamic> data = jsonDecode(responseBody);
-    return Alert.fromJson(data);
+    return GetAllAlertsResponseDTO.fromJson(data);
   }
 }
