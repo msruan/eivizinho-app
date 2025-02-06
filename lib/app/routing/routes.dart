@@ -7,4 +7,5 @@ abstract final class Routes {
   static const notifications = '/notificiations';
   static const alertsList = '/alerts';
   static const createAlert = 'create-alert';
+  static const profile = '/profile';
 }

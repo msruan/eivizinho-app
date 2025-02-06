@@ -15,6 +15,7 @@ class AlertListScreen extends StatelessWidget {
         child: AlertListContainer(),
       ),
       drawer: MainDrawer(),
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.backgroundPrimary,
         onPressed: () =>

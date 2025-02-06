@@ -6,8 +6,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocationPickerScreen extends StatefulWidget {
+  const LocationPickerScreen({super.key});
+
   @override
-  _LocationPickerScreenState createState() => _LocationPickerScreenState();
+  State<LocationPickerScreen> createState() => _LocationPickerScreenState();
 }
 
 class _LocationPickerScreenState extends State<LocationPickerScreen> {
@@ -70,37 +72,40 @@ class _LocationPickerScreenState extends State<LocationPickerScreen> {
       appBar: AppBar(title: Text("Selecione a localização")),
       body: _isLoading
           ? LoadingWidget()
-          : Stack(
-              children: [
-                GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                    target: _selectedLocation,
-                    zoom: 15,
-                  ),
-                  onMapCreated: (controller) {},
-                  onCameraMove: (position) {
-                    _updateLocation(position.target);
-                  },
-                ),
-                Center(
-                  child: Icon(Icons.location_pin, size: 50, color: Colors.red),
-                ),
-                Positioned(
-                  bottom: 30,
-                  left: 20,
-                  right: 20,
-                  child: Button(
-                    icon: Icon(
-                      Icons.check,
-                      color: Colors.white,
+          : SafeArea(
+              child: Stack(
+                children: [
+                  GoogleMap(
+                    initialCameraPosition: CameraPosition(
+                      target: _selectedLocation,
+                      zoom: 15,
                     ),
-                    onPress: _confirmLocation,
-                    title: "Confirmar localização",
-                    isLoading: _isLoading,
-                    backgroundColor: AppColors.green,
+                    onMapCreated: (controller) {},
+                    onCameraMove: (position) {
+                      _updateLocation(position.target);
+                    },
                   ),
-                ),
-              ],
+                  Center(
+                    child:
+                        Icon(Icons.location_pin, size: 50, color: Colors.red),
+                  ),
+                  Positioned(
+                    bottom: 30,
+                    left: 20,
+                    right: 20,
+                    child: Button(
+                      icon: Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                      onPress: _confirmLocation,
+                      title: "Confirmar localização",
+                      isLoading: _isLoading,
+                      backgroundColor: AppColors.green,
+                    ),
+                  ),
+                ],
+              ),
             ),
     );
   }

@@ -4,9 +4,11 @@ import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/data/repositories/alert_category/alert_category_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_category_entity.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
+import 'package:eiviznho/app/routing/routes.dart';
 import 'package:eiviznho/app/ui/alert_create/interfaces/alert_create_interface.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart' as geo;
+import 'package:go_router/go_router.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:june/june.dart';
@@ -95,7 +97,7 @@ class AlertCreateContainer extends StatefulWidget {
   const AlertCreateContainer({super.key});
 
   @override
-  _AlertCreateContainerState createState() => _AlertCreateContainerState();
+  State<AlertCreateContainer> createState() => _AlertCreateContainerState();
 }
 
 class _AlertCreateContainerState extends State<AlertCreateContainer> {
@@ -185,6 +187,10 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     );
 
     await _alertRepository.createAlert(requestData);
+
+    if (mounted) {
+      context.go(Routes.alertsList);
+    }
 
     _formKey.currentState?.reset();
     _descriptionController.clear();

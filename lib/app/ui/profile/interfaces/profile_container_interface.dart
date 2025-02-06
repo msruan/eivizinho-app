@@ -3,6 +3,8 @@ import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileInterface extends StatelessWidget {
+  const ProfileInterface({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,11 +42,11 @@ class ProfileInterface extends StatelessWidget {
               _buildProfileField("Bairro padrão", "Morada Nova"),
               _buildProfileField("Email", "example@gmail.com"),
               _buildProfileField("Senha", "********"),
-              SwitchListTile(
-                title: Text("Enviar como anônimo?"),
-                value: true,
-                onChanged: (value) {},
-              ),
+              // SwitchListTile(
+              //   title: Text("Enviar como anônimo?"),
+              //   value: true,
+              //   onChanged: (value) {},
+              // ),
               SizedBox(height: 20),
               Center(
                   child: Button(

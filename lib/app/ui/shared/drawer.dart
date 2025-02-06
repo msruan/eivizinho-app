@@ -1,5 +1,6 @@
 import 'package:eiviznho/app/config/assets.dart';
 import 'package:eiviznho/app/routing/routes.dart';
+import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,7 +16,7 @@ class MainDrawer extends StatelessWidget {
           InkWell(
             child: UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
+                color: AppColors.primaryBlue,
               ),
               accountName: Text('Entrar ou criar conta'),
               accountEmail: Text('Desbloqueie o alerta de incidentes'),
@@ -25,10 +26,12 @@ class MainDrawer extends StatelessWidget {
             ),
             onTap: () => context.push(Routes.register),
           ),
-          // ListTile(
-          //   leading: Icon(Icons.home),
-          //   title: Text('Zaun'),
-          // )
+          ListTile(
+            onTap: () => context.push(Routes.profile) ,
+             leading:
+              Icon(Icons.person),
+             title: Text('Perfil'),
+         )
         ],
       ),
     );

@@ -145,7 +145,7 @@ class AlertCreateInterface extends StatelessWidget {
       body: Column(
         children: [
           Expanded(child: _buildMainContent(context)),
-          _buildSubmitButton(),
+          SafeArea(child: _buildSubmitButton()),
         ],
       ),
     );
