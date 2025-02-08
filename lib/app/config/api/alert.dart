@@ -26,15 +26,20 @@ class AlertAPI {
       Map<String, dynamic> body) async {
     final url = Uri.parse('$baseUrl/alerts');
     try {
+      body["categoriesId"] = body["categoriesId"].toString();
       final response = await http.post(
         url,
-        headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        },
         body: jsonEncode(body),
       );
       if (response.statusCode == 201) {
         return response;
       } else {
-        throw Exception('Falha ao criar alerta: ${response.statusCode}');
+        throw Exception(
+            'Falha ao criar alerta: ${response.statusCode} ${response.body}');
       }
     } catch (e) {
       throw Exception('Erro POST JSON Alerta: $e');
@@ -43,14 +48,14 @@ class AlertAPI {
 
   static Future<http.StreamedResponse> postAlertAsMultipart(
       Map<String, dynamic> body) async {
-    final url = Uri.parse('$baseUrl/alert');
+    final url = Uri.parse('$baseUrl/alerts');
     var request = http.MultipartRequest('POST', url);
 
     request.fields.addAll({
-      'category': body['category'],
-      'description': body['description'],
-      'dtHr': body['dtHr'],
-      'local': body['local'],
+      'name': body['name'],
+      'categoriesId': jsonEncode(body['categoriesId']),
+      'approximateDtHr': body['approximateDtHr'],
+      'location': body['location'],
     });
 
     for (var mediaPath in body['media']) {
@@ -62,13 +67,17 @@ class AlertAPI {
       request.files.add(file);
     }
 
+    request.headers.addAll({'Authorization': 'Bearer $token'});
+
     try {
       final streamedResponse = await request.send();
+      // final response = await http.Response.fromStream(streamedResponse);
+
       if (streamedResponse.statusCode == 201) {
         return streamedResponse;
       } else {
         throw Exception(
-            'Falha ao criar alerta com mídia: ${streamedResponse.statusCode}');
+            'Falha ao criar alerta com mídia: ${streamedResponse.statusCode} ${streamedResponse.reasonPhrase}');
       }
     } catch (e) {
       throw Exception('Erro POST MULTIPART Alerta: $e');

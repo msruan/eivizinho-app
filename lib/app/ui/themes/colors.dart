@@ -8,4 +8,6 @@ abstract final class AppColors {
   static const Color primaryBlue = Color(0xFF083C62);
   static const Color secondaryBlue = Color.fromARGB(255, 14, 91, 146);
   static const Color red = Color.fromARGB(255, 223, 39, 26);
+  static const Color green = Color.fromRGBO(80, 167, 167, 1);
+  static const Color gray = Color.fromARGB(255, 255, 255, 255);
 }

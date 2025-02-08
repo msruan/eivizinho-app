@@ -4,12 +4,52 @@ import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/data/repositories/alert_category/alert_category_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_category_entity.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
+import 'package:eiviznho/app/routing/routes.dart';
 import 'package:eiviznho/app/ui/alert_create/interfaces/alert_create_interface.dart';
-import 'package:eiviznho/app/utils/get_current_position.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart' as geo;
+import 'package:go_router/go_router.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:june/june.dart';
+
+import '../../location_picker/location_picker_screen.dart';
+
+class LocationState extends JuneState {
+  LatLng? selectedLocation;
+  String? address;
+
+  void updateLocation(LatLng newLocation) async {
+    selectedLocation = newLocation;
+    address = await _getAddressFromLatLng(newLocation);
+    setState();
+  }
+
+  void clear() {
+    selectedLocation = null;
+    address = null;
+    setState();
+  }
+
+  Future<String> _getAddressFromLatLng(LatLng position) async {
+    try {
+      List<geo.Placemark> placemarks = await geo.placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        geo.Placemark place = placemarks.first;
+
+        return "${place.thoroughfare ?? "Rua desconhecida"}, ${place.subThoroughfare ?? "número desconhecido"}";
+      } else {
+        return "Endereço não encontrado";
+      }
+    } catch (e) {
+      throw Exception("Erro ao obter endereço: $e");
+    }
+  }
+}
 
 class DropdownState extends JuneState {
   AlertCategory? selectedValue;
@@ -38,7 +78,7 @@ class MediaState extends JuneState {
         setState();
       }
     } catch (e) {
-      throw Exception('Erro no pick da galeria... $e');
+      throw Exception('Erro ao pegar imagens da galeria... $e');
     }
   }
 
@@ -57,7 +97,7 @@ class AlertCreateContainer extends StatefulWidget {
   const AlertCreateContainer({super.key});
 
   @override
-  _AlertCreateContainerState createState() => _AlertCreateContainerState();
+  State<AlertCreateContainer> createState() => _AlertCreateContainerState();
 }
 
 class _AlertCreateContainerState extends State<AlertCreateContainer> {
@@ -65,11 +105,11 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
 
   late AlertCategoryRepository _alertTypeRepository;
   late AlertRepository _alertRepository;
-
   late TextEditingController _descriptionController;
 
   DropdownState dropdownState = June.getState(() => DropdownState());
   MediaState mediaState = June.getState(() => MediaState());
+  LocationState locationState = June.getState(() => LocationState());
 
   bool _isLoading = false;
 
@@ -79,7 +119,6 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     _alertTypeRepository = injector.get<AlertCategoryRepository>();
     _alertRepository = injector.get<AlertRepository>();
     _descriptionController = TextEditingController();
-
     _fetchAlertTypes();
   }
 
@@ -87,6 +126,7 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
   void dispose() {
     _descriptionController.dispose();
     dropdownState.updateTypes([]);
+    locationState.clear();
     mediaState.clear();
     super.dispose();
   }
@@ -107,6 +147,19 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     }
   }
 
+  Future<void> _pickLocation() async {
+    final LatLng? pickedLocation = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LocationPickerScreen()),
+    );
+
+    if (pickedLocation != null) {
+      locationState.updateLocation(pickedLocation);
+    } else {
+      throw Exception("Nenhuma localização selecionada");
+    }
+  }
+
   Future<void> _submitForm() async {
     if (!mounted) return;
     FocusScope.of(context).unfocus();
@@ -123,22 +176,26 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     final selectedAlertType = dropdownState.selectedValue;
     final selectedMedia = mediaState.selectedMedia;
 
-    final Position currentPosition = await getCurrentPosition();
-
     final requestData = CreateAlertRequestDTO(
       name: description,
       categories: [selectedAlertType!],
       media: selectedMedia,
       location: Location(
-          latitude: currentPosition.latitude,
-          longitude: currentPosition.longitude),
+        latitude: locationState.selectedLocation!.latitude,
+        longitude: locationState.selectedLocation!.longitude,
+      ),
     );
 
     await _alertRepository.createAlert(requestData);
 
+    if (mounted) {
+      context.go(Routes.alertsList);
+    }
+
     _formKey.currentState?.reset();
     _descriptionController.clear();
     dropdownState.updateTypes([]);
+    locationState.clear();
     mediaState.clear();
 
     setState(() {
@@ -148,18 +205,22 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return JuneBuilder(() => MediaState(),
-        builder: (mediaState) => JuneBuilder(
-              () => DropdownState(),
-              builder: (dropdownState) => AlertCreateInterface(
-                textingController: _descriptionController,
-                onSubmit: _submitForm,
-                dropdownState: dropdownState,
-                mediaState: mediaState,
-                validator: _validatorString,
-                formKey: _formKey,
-                isLoading: _isLoading,
-              ),
-            ));
+    return JuneBuilder(
+      () => MediaState(),
+      builder: (mediaState) => JuneBuilder(
+        () => DropdownState(),
+        builder: (dropdownState) => AlertCreateInterface(
+          textingController: _descriptionController,
+          onSubmit: _submitForm,
+          dropdownState: dropdownState,
+          mediaState: mediaState,
+          locationState: locationState,
+          onPickLocation: _pickLocation,
+          validator: _validatorString,
+          formKey: _formKey,
+          isLoading: _isLoading,
+        ),
+      ),
+    );
   }
 }

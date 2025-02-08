@@ -45,7 +45,7 @@ class _MainLayoutState extends State<MainLayout> {
 
 //Todo: I seek something about parentKey...
 class _MainLayoutBottomBar extends StatefulWidget {
-  const _MainLayoutBottomBar({super.key});
+  const _MainLayoutBottomBar();
 
   @override
   State<_MainLayoutBottomBar> createState() => _MainLayoutBottomBarState();

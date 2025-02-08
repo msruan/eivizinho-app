@@ -9,6 +9,7 @@ class CreateAlertRequestDTO {
   final List<AlertCategory> categories;
   final List<XFile>? media;
   final Location location;
+  final String approximateDtHr = "2024-06-05T20:00:00";
 
   CreateAlertRequestDTO({
     required this.name,
@@ -23,7 +24,8 @@ class CreateAlertRequestDTO {
       'categoriesId':
           categories.map((category) => int.parse(category.id)).toList(),
       'media': media?.map((mediaFile) => mediaFile.path).toList() ?? [],
-      'location': location.toJson()
+      'location': '${location.latitude}, ${location.longitude}',
+      "approximateDtHr": approximateDtHr
     };
   }
 }

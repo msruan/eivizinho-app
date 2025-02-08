@@ -1,5 +1,6 @@
 import 'package:eiviznho/app/routing/routes.dart';
 import 'package:eiviznho/app/ui/alert_list/containers/alert_list_container.dart';
+import 'package:eiviznho/app/ui/shared/drawer.dart';
 import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +14,8 @@ class AlertListScreen extends StatelessWidget {
       body: SafeArea(
         child: AlertListContainer(),
       ),
+      drawer: MainDrawer(),
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.backgroundPrimary,
         onPressed: () =>

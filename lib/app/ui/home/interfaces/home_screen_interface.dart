@@ -1,6 +1,7 @@
 import 'dart:async';
 
-import 'package:eiviznho/app/ui/themes/colors.dart';
+import 'package:eiviznho/app/ui/shared/drawer.dart';
+import 'package:eiviznho/app/ui/shared/loading_widget.dart';
 import 'package:eiviznho/app/ui/themes/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -34,13 +35,9 @@ class HomeScreenInterface extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
+      drawer: MainDrawer(),
       body: currentPosition == null
-          ? const Center(
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: AppColors.textPrimary,
-              ),
-            )
+          ? LoadingWidget()
           : Stack(
               children: [
                 GoogleMap(
