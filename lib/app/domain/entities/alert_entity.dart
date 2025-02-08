@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:eiviznho/app/domain/entities/alert_category_entity.dart';
+import 'package:eiviznho/app/domain/entities/user_entity.dart';
 
 class Alert {
   final String id;
@@ -10,6 +11,7 @@ class Alert {
   final DateTime dtHr;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final User user;
 
   Alert(
       {required this.id,
@@ -19,7 +21,8 @@ class Alert {
       required this.local,
       required this.createdAt,
       required this.updatedAt,
-      required this.media});
+      required this.media,
+      required this.user});
 }
 
 class Location {

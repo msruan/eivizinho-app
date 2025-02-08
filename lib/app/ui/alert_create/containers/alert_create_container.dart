@@ -1,4 +1,5 @@
 import 'package:eiviznho/app/config/dependencies.dart';
+import 'package:eiviznho/app/config/exceptions.dart';
 import 'package:eiviznho/app/data/dtos/alerts/create_alert_dto.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/data/repositories/alert_category/alert_category_repository.dart';
@@ -78,7 +79,7 @@ class MediaState extends JuneState {
         setState();
       }
     } catch (e) {
-      throw Exception('Erro ao pegar imagens da galeria... $e');
+      throw InternalSystemException('Erro ao pegar imagens da galeria: $e');
     }
   }
 

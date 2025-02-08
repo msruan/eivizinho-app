@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:eiviznho/app/config/dependencies.dart';
+import 'package:eiviznho/app/config/env.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/ui/alert_list/components/alert_details.dart';
 import 'package:eiviznho/app/ui/home/interfaces/home_screen_interface.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +22,7 @@ class HomeScreenContainer extends StatefulWidget {
 }
 
 class HomeScreenContainerState extends State<HomeScreenContainer> {
-  final String apiKey = dotenv.env['GOOGLE_API_KEY'] ?? '';
+  final String apiKey = Enviroment.googleApiKey() ?? "undefined";
 
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();

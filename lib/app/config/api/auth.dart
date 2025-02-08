@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:eiviznho/app/config/env.dart';
+import 'package:eiviznho/app/utils/debug.dart';
 import 'package:http/http.dart' as http;
 
 class AuthAPI {
-  static final String? _baseUrl = dotenv.env['BASE_URL'];
+  static final String? _baseUrl = Enviroment.baseUrl();
 
   static Future<Map<String, dynamic>> registerUser({
     required String fullName,
@@ -28,12 +30,12 @@ class AuthAPI {
         }),
       );
 
-      print(response);
+      debug(response);
 
       if (response.statusCode == 201) {
         return jsonDecode(response.body) as Map<String, dynamic>;
       } else {
-        throw Exception(
+        throw HttpException(
           'Erro no registro: ${response.statusCode} - ${response.body}',
         );
       }

@@ -139,7 +139,7 @@ class AlertDetails extends StatelessWidget {
                   height: 15,
                 ),
                 Text(
-                  'Relatado por Asa',
+                  'Relatado por ${alert.user.name}',
                   style: AppTextStyles.bodySmall,
                 ),
               ],

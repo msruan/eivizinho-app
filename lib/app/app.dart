@@ -1,3 +1,4 @@
+import 'package:eiviznho/app/config/env.dart';
 import 'package:eiviznho/app/routing/router.dart';
 
 import 'package:eiviznho/app/ui/themes/text_styles.dart';
@@ -8,6 +9,8 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Enviroment.validate();
+
     return MaterialApp.router(
       title: "Ei Vizinho!",
       routerConfig: router,
