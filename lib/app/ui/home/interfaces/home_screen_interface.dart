@@ -34,6 +34,7 @@ class HomeScreenInterface extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       drawer: MainDrawer(),
       body: currentPosition == null

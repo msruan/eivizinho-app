@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/ui/alert_page/alert_screen.dart';
+import 'package:eiviznho/app/ui/themes/alert_categories.dart';
 import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:eiviznho/app/ui/themes/text_styles.dart';
 import 'package:flutter/material.dart';
@@ -13,19 +14,13 @@ class AlertDetails extends StatelessWidget {
   final Alert alert;
   AlertDetails({super.key, required this.alert});
 
-  final Map<String, IconData> alertIcons = {
-    'Arrombamento': Icons.lock,
-    'Incêndio': Icons.local_fire_department_rounded,
-    'Acidente': Icons.local_hospital,
-    'Assalto': Icons.warning_rounded,
-  };
-
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
 
   @override
   Widget build(BuildContext context) {
-    final icon = alertIcons[alert.category.name] ?? Icons.warning_rounded;
+    final categorieTheme = AlertCategoriesTheme.getByName(alert.category.name);
+    final icon = categorieTheme.icon;
     final date = DateFormat('dd/MM/yyyy').format(alert.dtHr);
     final time = DateFormat('HH:mm').format(alert.dtHr);
 
@@ -124,11 +119,12 @@ class AlertDetails extends StatelessWidget {
                     ),
                     markers: {
                       Marker(
-                          markerId: MarkerId("Alert position"),
-                          icon: BitmapDescriptor.defaultMarkerWithHue(
-                              BitmapDescriptor.hueViolet),
-                          position: LatLng(
-                              alert.local.latitude, alert.local.longitude))
+                        markerId: MarkerId("Alert position"),
+                        icon: BitmapDescriptor.defaultMarkerWithHue(
+                            categorieTheme.bitMapHue),
+                        position:
+                            LatLng(alert.local.latitude, alert.local.longitude),
+                      )
                     },
                     onMapCreated: (GoogleMapController control) {
                       _controller.complete(control);

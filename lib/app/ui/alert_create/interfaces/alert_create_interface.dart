@@ -63,12 +63,13 @@ class AlertCreateInterface extends StatelessWidget {
       title: 'Localização',
       inputWidget: ElevatedButton(
         style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
           elevation: 0,
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
-          side: BorderSide(color: AppColors.textPrimary, width: 1),
+          side: BorderSide(color: AppColors.backgroundSecondary, width: 1),
         ),
         onPressed: onPickLocation,
         child: Row(
@@ -82,7 +83,7 @@ class AlertCreateInterface extends StatelessWidget {
             ),
             Icon(
               Icons.location_on,
-              color: AppColors.textPrimary,
+              color: AppColors.red,
             ),
           ],
         ),
@@ -113,10 +114,19 @@ class AlertCreateInterface extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildTypeOfAccident(),
+              const SizedBox(
+                height: 15,
+              ),
               _buildDescription(),
+              const SizedBox(
+                height: 15,
+              ),
               JuneBuilder(
                 () => locationState,
                 builder: (locationState) => _buildLocationButton(context),
+              ),
+              const SizedBox(
+                height: 15,
               ),
               _buildAttachments(),
             ],

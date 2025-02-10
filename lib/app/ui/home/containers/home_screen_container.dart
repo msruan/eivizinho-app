@@ -7,6 +7,7 @@ import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/ui/alert_list/components/alert_details.dart';
 import 'package:eiviznho/app/ui/home/interfaces/home_screen_interface.dart';
+import 'package:eiviznho/app/ui/themes/alert_categories.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -35,13 +36,6 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
   final TextEditingController _textController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
-  final Map<String, double> categoryColors = {
-    'assalto': BitmapDescriptor.hueRed,
-    'incêndio': BitmapDescriptor.hueOrange,
-    'acidente': BitmapDescriptor.hueYellow,
-    'furto': BitmapDescriptor.hueBlue,
-  };
-
   @override
   void initState() {
     super.initState();
@@ -69,10 +63,13 @@ class HomeScreenContainerState extends State<HomeScreenContainer> {
   Future<void> _fetchAlerts() async {
     try {
       final alerts = await _alertRepository.getAllAlerts();
+
       setState(() {
         _markers = alerts.map((alert) {
-          final hue =
-              categoryColors[alert.category.name] ?? BitmapDescriptor.hueViolet;
+          final categoryTheme =
+              AlertCategoriesTheme.getByName(alert.category.name);
+
+          final hue = categoryTheme.bitMapHue;
           return Marker(
               markerId: MarkerId(alert.id.toString()),
               position: LatLng(alert.local.latitude, alert.local.longitude),

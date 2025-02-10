@@ -41,7 +41,7 @@ class RegisterResponseDTO {
 
   factory RegisterResponseDTO.fromMap(Map<String, dynamic> map) {
     return RegisterResponseDTO(
-      user: User.fromJson(map['user']),
+      user: User.fromJson(map),
     );
   }
 

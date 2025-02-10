@@ -130,6 +130,7 @@ class NotificationContentState extends State<NotificationsContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: ListView.builder(
         itemCount: messages.length,
         itemBuilder: (context, index) {
