@@ -34,9 +34,9 @@ final router = GoRouter(
       builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(
-              path: Routes.profile,
-              builder: (context, state) => const ProfileScreen(),
-            ),
+      path: Routes.profile,
+      builder: (context, state) => const ProfileScreen(),
+    ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
       builder: (context, state, child) {
@@ -54,7 +54,6 @@ final router = GoRouter(
           path: Routes.notifications,
           parentNavigatorKey: _shellNavigatorKey,
           builder: (context, state) => const NotificationsScreen(),
-    
         ),
         GoRoute(
           path: Routes.alertsList,
@@ -68,7 +67,6 @@ final router = GoRouter(
             ),
           ],
         ),
-        
       ],
     )
   ],
