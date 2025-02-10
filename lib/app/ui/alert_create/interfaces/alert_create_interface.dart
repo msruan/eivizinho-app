@@ -142,6 +142,7 @@ class AlertCreateInterface extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: baseAppBar(title: 'Criar alerta'),
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Expanded(child: _buildMainContent(context)),

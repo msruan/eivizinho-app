@@ -20,3 +20,11 @@ class InternetException extends ApplicationException {
   @override
   String toString() => "InternetException -> $message";
 }
+
+class APIException extends InternetException {
+  final int code;
+  const APIException(super.message, {required this.code});
+
+  @override
+  String toString() => "$code: $message";
+}

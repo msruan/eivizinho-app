@@ -5,6 +5,8 @@ import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../data/dtos/auth/register_dto.dart';
+
 class RegisterContainer extends StatefulWidget {
   const RegisterContainer({super.key});
 
@@ -28,12 +30,13 @@ class _RegisterContainerState extends State<RegisterContainer> {
       }
 
       await AuthAPI.registerUser(
-        fullName: _nameController.text,
-        cpf: _cpfController.text,
-        email: _emailController.text,
-        password: _passwordController.text,
-        passwordConfirmation: _confirmPasswordController.text,
-      );
+          payload: RegisterRequestDTO(
+            name: _nameController.text,
+            cpf: _cpfController.text,
+            email: _emailController.text,
+            password: _passwordController.text,
+            passwordConfirmation: _confirmPasswordController.text,
+      ));
 
       if (!mounted) {
         return;

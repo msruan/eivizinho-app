@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:eiviznho/app/config/auth_manager.dart';
+import 'package:eiviznho/app/config/token_storage.dart';
 import 'package:eiviznho/app/config/env.dart';
 import 'package:eiviznho/app/config/exceptions.dart';
 import 'package:http/http.dart' as http;
@@ -30,7 +30,7 @@ class AlertAPI {
 
   static Future<http.Response> postAlertAsJson(
       Map<String, dynamic> body) async {
-    final token = await AuthManager().getToken();
+    final token = await TokenStorage.getToken();
     final url = Uri.parse('$baseUrl/alerts');
     try {
       body["categoriesId"] = body["categoriesId"].toString();
@@ -56,7 +56,7 @@ class AlertAPI {
   static Future<http.StreamedResponse> postAlertAsMultipart(
       Map<String, dynamic> body) async {
     final url = Uri.parse('$baseUrl/alerts');
-    final token = await AuthManager().getToken();
+    final token = await TokenStorage.getToken();
     var request = http.MultipartRequest('POST', url);
 
     request.fields.addAll({
