@@ -107,6 +107,7 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
   late AlertCategoryRepository _alertTypeRepository;
   late AlertRepository _alertRepository;
   late TextEditingController _descriptionController;
+  late TextEditingController _dateController;
 
   DropdownState dropdownState = June.getState(() => DropdownState());
   MediaState mediaState = June.getState(() => MediaState());
@@ -120,12 +121,14 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     _alertTypeRepository = injector.get<AlertCategoryRepository>();
     _alertRepository = injector.get<AlertRepository>();
     _descriptionController = TextEditingController();
+    _dateController = TextEditingController();
     _fetchAlertTypes();
   }
 
   @override
   void dispose() {
     _descriptionController.dispose();
+    _dateController.dispose();
     dropdownState.updateTypes([]);
     locationState.clear();
     mediaState.clear();
@@ -174,11 +177,13 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
     });
 
     final description = _descriptionController.text;
+    final date = _dateController.text;
     final selectedAlertType = dropdownState.selectedValue;
     final selectedMedia = mediaState.selectedMedia;
 
     final requestData = CreateAlertRequestDTO(
       name: description,
+      approximateDtHr: date,
       categories: [selectedAlertType!],
       media: selectedMedia,
       location: Location(
@@ -195,6 +200,7 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
 
     _formKey.currentState?.reset();
     _descriptionController.clear();
+    _dateController.clear();
     dropdownState.updateTypes([]);
     locationState.clear();
     mediaState.clear();
@@ -212,6 +218,7 @@ class _AlertCreateContainerState extends State<AlertCreateContainer> {
         () => DropdownState(),
         builder: (dropdownState) => AlertCreateInterface(
           textingController: _descriptionController,
+          dateController: _dateController,
           onSubmit: _submitForm,
           dropdownState: dropdownState,
           mediaState: mediaState,

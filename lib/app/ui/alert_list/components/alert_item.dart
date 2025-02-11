@@ -1,6 +1,5 @@
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
 import 'package:eiviznho/app/ui/themes/alert_categories.dart';
-import 'package:eiviznho/app/ui/themes/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -26,6 +25,7 @@ class AlertItem extends StatelessWidget {
         padding: const EdgeInsets.all(3.0),
         child: Row(
           children: [
+            
             SizedBox(
               width: 80,
               child: Column(

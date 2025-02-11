@@ -37,6 +37,7 @@ class NotificationContentState extends State<NotificationsContent> {
     _notificationsRepository = injector.get<NotificationsRepository>();
 
     _startConnection();
+    
   }
 
   void _startConnection() {

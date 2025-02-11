@@ -9,12 +9,13 @@ class CreateAlertRequestDTO {
   final List<AlertCategory> categories;
   final List<XFile>? media;
   final Location location;
-  final String approximateDtHr = "2024-06-05T20:00:00";
+  final String approximateDtHr;
 
   CreateAlertRequestDTO({
     required this.name,
     required this.categories,
     required this.location,
+    required this.approximateDtHr,
     this.media,
   });
 

@@ -1,3 +1,4 @@
+import 'package:date_field/date_field.dart';
 import 'package:eiviznho/app/ui/alert_create/components/field_box_widget.dart';
 import 'package:eiviznho/app/ui/alert_create/components/image_input.widget.dart';
 import 'package:eiviznho/app/ui/alert_create/components/text_input_widget.dart';
@@ -13,6 +14,7 @@ class AlertCreateInterface extends StatelessWidget {
   final GlobalKey<FormState> formKey;
   final DropdownState dropdownState;
   final TextEditingController textingController;
+  final TextEditingController dateController;
   final MediaState mediaState;
   final LocationState locationState;
   final VoidCallback onSubmit;
@@ -20,18 +22,18 @@ class AlertCreateInterface extends StatelessWidget {
   final Function(String) validator;
   final bool isLoading;
 
-  const AlertCreateInterface({
-    super.key,
-    required this.formKey,
-    required this.dropdownState,
-    required this.mediaState,
-    required this.locationState,
-    required this.onSubmit,
-    required this.onPickLocation,
-    required this.validator,
-    required this.textingController,
-    required this.isLoading,
-  });
+  const AlertCreateInterface(
+      {super.key,
+      required this.formKey,
+      required this.dropdownState,
+      required this.mediaState,
+      required this.locationState,
+      required this.onSubmit,
+      required this.onPickLocation,
+      required this.validator,
+      required this.textingController,
+      required this.isLoading,
+      required this.dateController});
 
   Widget _buildTypeOfAccident() {
     return FieldBox(
@@ -91,6 +93,49 @@ class AlertCreateInterface extends StatelessWidget {
     );
   }
 
+  Widget _buildDate(BuildContext context) {
+    return FieldBox(
+      title: 'Data aproximada',
+      inputWidget: DateTimeFormField(
+        mode: DateTimeFieldPickerMode.dateAndTime,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+          labelText: 'Selecione uma data',
+          labelStyle: Theme.of(context).textTheme.bodySmall,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(
+              color: AppColors.backgroundSecondary,
+              width: 1,
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(
+              color: AppColors.green,
+              width: 1.5,
+            ),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+            borderSide: BorderSide(
+              color: AppColors.backgroundSecondary,
+              width: 1,
+            ),
+          ),
+        ),
+        firstDate: DateTime.now().add(const Duration(days: 10)),
+        lastDate: DateTime.now().add(const Duration(days: 40)),
+        initialPickerDateTime: DateTime.now().add(const Duration(days: 20)),
+        onChanged: (DateTime? value) {
+          if (value != null) {
+            dateController.text = value.toIso8601String();
+          }
+        },
+      ),
+    );
+  }
+
   Widget _buildAttachments() {
     return FieldBox(
       title: 'Anexos',
@@ -118,6 +163,10 @@ class AlertCreateInterface extends StatelessWidget {
                 height: 15,
               ),
               _buildDescription(),
+              const SizedBox(
+                height: 15,
+              ),
+              _buildDate(context),
               const SizedBox(
                 height: 15,
               ),

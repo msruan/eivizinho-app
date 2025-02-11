@@ -12,6 +12,7 @@ class NotificationItem extends StatelessWidget {
     required this.date,
   });
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 4.0),
