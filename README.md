@@ -4,7 +4,7 @@ A Piauian app focused on neighborhood security 🌵
 
 ## Related
 
-Reach the [main repository](https://github.com/liviaalves00/Engenharia-de-Software-III) of ei vizinho project, or the [backend](https://github.com/Meidesu/eiVizinho-API).
+Reach the [main repository](https://github.com/liviaalves00/Engenharia-de-Software-III) of ei vizinho project or the [backend](https://github.com/Meidesu/eiVizinho-API).
 
 ## Features
 
