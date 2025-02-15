@@ -1,6 +1,6 @@
 # ei, vizinho!
 
-Developed for a Software Engineering project, this Piauian app focuses on neighborhood security 🌵<br> Reach the [main repository](https://github.com/liviaalves00/Engenharia-de-Software-III) or the [backend](https://github.com/Meidesu/eiVizinho-API) of this project.
+A Piauian app focused on neighborhood security 🌵<br> This was developed to a Software Engineering project, you can check the [main repository](https://github.com/liviaalves00/Engenharia-de-Software-III) or the [backend](https://github.com/Meidesu/eiVizinho-API).
 
 ## Features
 
