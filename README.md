@@ -1,10 +1,6 @@
 # ei, vizinho!
 
-A Piauian app focused on neighborhood security 🌵
-
-## Related
-
-Reach the [main repository](https://github.com/liviaalves00/Engenharia-de-Software-III) or the [backend](https://github.com/Meidesu/eiVizinho-API) of ei vizinho project.
+Developed for a Software Engineering project, this Piauian app focuses on neighborhood security 🌵<br> Reach the [main repository](https://github.com/liviaalves00/Engenharia-de-Software-III) or the [backend](https://github.com/Meidesu/eiVizinho-API) of this project.
 
 ## Features
 
@@ -22,16 +18,18 @@ Reach the [main repository](https://github.com/liviaalves00/Engenharia-de-Softwa
 
 To run this project, you will need to add the following environment variables to your .env file
 
-`BASE_URL`
+`BASE_URL` - The URL where you're current running the [backend server](https://github.com/Meidesu/eiVizinho-API);
 
-`GOOGLE_API_KEY`
+`GOOGLE_API_KEY` - An API key of Google Maps, with the Maps SDK, Places API and Geocoding API activated. Get one at [Google Cloud Console](https://console.cloud.google.com).
 
 ## Run Locally
+
+Install Flutter SDK: [Installation Guide](https://flutter.dev/docs/get-started/install)
 
 Clone the project
 
 ```bash
-git clone https://msruan/eivizinho-app
+git clone https://github.com/msruan/eivizinho-app
 ```
 
 Go to the project directory
