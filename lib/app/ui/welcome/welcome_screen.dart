@@ -43,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
     final buttonTextDecoration = GoogleFonts.inter(
       fontSize: 20,
       fontWeight: FontWeight.w600,
-      color: Colors.white,
+      color: Colors.black,
     );
 
     Widget logo = Column(
@@ -107,6 +107,7 @@ class WelcomeScreen extends StatelessWidget {
     );
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: Padding(

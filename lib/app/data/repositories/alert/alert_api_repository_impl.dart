@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:eiviznho/app/config/api/alert.dart';
 import 'package:eiviznho/app/data/dtos/alerts/create_alert_dto.dart';
+import 'package:eiviznho/app/data/dtos/alerts/get_all_alerts_dto.dart';
 import 'package:eiviznho/app/data/repositories/alert/alert_repository.dart';
 import 'package:eiviznho/app/domain/entities/alert_entity.dart';
+import 'package:eiviznho/app/utils/debug.dart';
 
 class AlertRepositoryImpl implements AlertRepository {
   @override
@@ -13,8 +15,10 @@ class AlertRepositoryImpl implements AlertRepository {
     if (response.statusCode == 200) {
       List<dynamic> body = jsonDecode(response.body);
 
+      debug(body);
+
       final List<Alert> alerts =
-          body.map((alert) => Alert.fromJson(alert)).toList();
+          body.map((alert) => GetAllAlertsResponseDTO.fromJson(alert)).toList();
       return alerts;
     }
 
@@ -36,6 +40,6 @@ class AlertRepositoryImpl implements AlertRepository {
     }
 
     final Map<String, dynamic> data = jsonDecode(responseBody);
-    return Alert.fromJson(data);
+    return GetAllAlertsResponseDTO.fromJson(data);
   }
 }
